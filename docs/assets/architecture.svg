@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura analítica Masterplop</title>
+  <desc id="desc">Flujo desde archivos fuente hasta DuckDB, controles, agregados y dashboards.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F7FAFF"/><stop offset="1" stop-color="#F8F3FF"/></linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1A56DB"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#172033" flood-opacity=".10"/></filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#9BB2DB"/></marker>
+  </defs>
+  <rect width="1200" height="430" rx="28" fill="url(#bg)"/>
+  <text x="52" y="58" font-family="Segoe UI,Arial" font-size="25" font-weight="800" fill="#172033">Arquitectura reproducible y auditable</text>
+  <text x="52" y="87" font-family="Segoe UI,Arial" font-size="14" fill="#667085">Una sola fuente de verdad, reglas SQL explícitas y salidas públicas agregadas.</text>
+  <g filter="url(#shadow)" font-family="Segoe UI,Arial">
+    <g transform="translate(48 130)"><rect width="188" height="205" rx="18" fill="#fff" stroke="#DCE7FA"/><rect width="188" height="12" rx="6" fill="#FBBF24"/><text x="22" y="49" font-size="14" font-weight="800" fill="#172033">FUENTES</text><text x="22" y="82" font-size="15" fill="#44506A">db_transac.csv</text><text x="22" y="111" font-size="15" fill="#44506A">mcg_list.xlsx</text><text x="22" y="140" font-size="15" fill="#44506A">Diccionario.xlsx</text><text x="22" y="176" font-size="12" fill="#667085">Inmutables · con hash</text></g>
+    <g transform="translate(286 130)"><rect width="202" height="205" rx="18" fill="#fff" stroke="#DCE7FA"/><rect width="202" height="12" rx="6" fill="#1A56DB"/><text x="22" y="49" font-size="14" font-weight="800" fill="#172033">DUCKDB</text><text x="22" y="82" font-size="15" fill="#44506A">raw</text><text x="22" y="111" font-size="15" fill="#44506A">staging</text><text x="22" y="140" font-size="15" fill="#44506A">analytics</text><text x="22" y="169" font-size="15" fill="#44506A">audit</text><text x="22" y="192" font-size="12" fill="#667085">DECIMAL · LEFT JOIN</text></g>
+    <g transform="translate(538 130)"><rect width="202" height="205" rx="18" fill="#fff" stroke="#DCE7FA"/><rect width="202" height="12" rx="6" fill="#7C3AED"/><text x="22" y="49" font-size="14" font-weight="800" fill="#172033">CONTROLES</text><text x="22" y="82" font-size="15" fill="#44506A">20 calidad</text><text x="22" y="111" font-size="15" fill="#44506A">17 indicadores</text><text x="22" y="140" font-size="15" fill="#44506A">11 cashback</text><text x="22" y="176" font-size="12" fill="#667085">48/48 conciliados</text></g>
+    <g transform="translate(790 130)"><rect width="170" height="205" rx="18" fill="#fff" stroke="#DCE7FA"/><rect width="170" height="12" rx="6" fill="#1A56DB"/><text x="20" y="49" font-size="14" font-weight="800" fill="#172033">AGREGADOS</text><text x="20" y="82" font-size="15" fill="#44506A">11 datasets</text><text x="20" y="111" font-size="15" fill="#44506A">CSV + JSON</text><text x="20" y="140" font-size="15" fill="#44506A">sin card_id</text><text x="20" y="176" font-size="12" fill="#667085">seguros para publicar</text></g>
+    <g transform="translate(1010 130)"><rect width="142" height="205" rx="18" fill="#fff" stroke="#DCE7FA"/><rect width="142" height="12" rx="6" fill="url(#brand)"/><text x="18" y="49" font-size="14" font-weight="800" fill="#172033">CONSUMO</text><text x="18" y="83" font-size="14" fill="#44506A">Streamlit</text><text x="18" y="112" font-size="14" fill="#44506A">Plotly</text><text x="18" y="141" font-size="14" fill="#44506A">GitHub Pages</text><text x="18" y="176" font-size="12" fill="#667085">responsive</text></g>
+  </g>
+  <g stroke="#9BB2DB" stroke-width="3" fill="none" marker-end="url(#arrow)"><path d="M242 232H276"/><path d="M494 232H528"/><path d="M746 232H780"/><path d="M966 232H1000"/></g>
+  <rect x="48" y="370" width="1104" height="1" fill="#DCE4F2"/><circle cx="61" cy="397" r="6" fill="#22C55E"/><text x="77" y="402" font-family="Segoe UI,Arial" font-size="13" fill="#44506A">Pipeline atómico: la base válida solo se reemplaza cuando todos los controles pasan.</text>
+</svg>

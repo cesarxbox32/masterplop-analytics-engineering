@@ -1,56 +1,84 @@
-# Masterplop — base analítica e indicadores auditables
+<p align="center">
+  <img src="Masterplop%20logo.png" alt="Masterplop" width="230">
+</p>
 
-El proyecto construye una base analítica reproducible con DuckDB y Python, calcula los cinco indicadores solicitados y presenta los resultados en un dashboard ejecutivo local con Streamlit y Plotly.
+<h1 align="center">Masterplop Analytics Engineering</h1>
+
+<p align="center">
+  Base analítica reproducible, cinco indicadores ejecutivos y conciliación financiera de la campaña de cashback de mayo de 2024.
+</p>
+
+<p align="center">
+  <a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/"><img alt="Dashboard Live" src="https://img.shields.io/badge/Dashboard-Live-1A56DB?style=for-the-badge&logo=plotly&logoColor=white"></a>
+  <a href="https://github.com/cesarxbox32/masterplop-analytics-engineering/actions/workflows/pages.yml"><img alt="GitHub Pages" src="https://img.shields.io/github/actions/workflow/status/cesarxbox32/masterplop-analytics-engineering/pages.yml?branch=main&style=for-the-badge&label=Pages"></a>
+  <a href="https://github.com/cesarxbox32/masterplop-analytics-engineering/actions/workflows/quality.yml"><img alt="Quality" src="https://img.shields.io/github/actions/workflow/status/cesarxbox32/masterplop-analytics-engineering/quality.yml?branch=main&style=for-the-badge&label=Quality"></a>
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.12-FBBF24?style=for-the-badge&logo=python&logoColor=172033">
+  <img alt="DuckDB" src="https://img.shields.io/badge/DuckDB-2.0-7C3AED?style=for-the-badge&logo=duckdb&logoColor=white">
+</p>
+
+<p align="center">
+  <strong><a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/">Abrir dashboard</a></strong>
+  · <a href="#resultados-validados">Resultados</a>
+  · <a href="#cashback-oficial--mayo-2024">Cashback</a>
+  · <a href="#ejecución-reproducible-en-windows--powershell">Ejecutar</a>
+  · <a href="#ai-log">AI Log</a>
+</p>
+
+![Resultados verificados de Masterplop](docs/assets/validation.svg)
+
+> **Resultado principal:** el costo oficial de la campaña es **USD 178.471,62**, con **4.029 tarjetas beneficiadas** y **2.676 tarjetas alcanzando el tope de USD 50**.
+
+## Tabla de contenidos
+
+- [Contexto y objetivo](#contexto-y-objetivo-de-negocio)
+- [Arquitectura](#arquitectura)
+- [Ejecución reproducible](#ejecución-reproducible-en-windows--powershell)
+- [Dashboard ejecutivo](#dashboard-ejecutivo)
+- [Reglas de transformación](#reglas-de-transformación)
+- [Indicadores](#indicadores-y-decisiones-de-negocio)
+- [Cashback](#cashback-oficial--mayo-2024)
+- [Calidad y controles](#matriz-de-controles-verificados)
+- [Riesgos y recomendaciones](#riesgos-limitaciones-y-recomendaciones)
+- [AI Log](#ai-log)
+
+## Contexto y objetivo de negocio
+
+Masterplop necesita transformar un archivo transaccional heterogéneo en información confiable para gerentes de banca. La solución explica actividad, gasto, comportamiento regional, mezcla de comercios y adopción contactless; además, estima con precisión monetaria el costo de una campaña de cashback.
+
+La implementación privilegia la conciliación: conserva valores brutos, documenta cada normalización, no elimina ajustes negativos, mantiene claves sin maestro y separa las fórmulas productivas de los valores de referencia utilizados en pruebas.
 
 ## Arquitectura
 
-- `raw`: copia inmutable dentro de DuckDB de las 12 columnas del CSV como texto y del maestro MCG leído desde Excel.
-- `staging`: vistas con campos brutos y conversiones explícitas de identificadores, tipos, montos, flags, fechas, horas y países.
-- `analytics`: vista transaccional enriquecida con el maestro MCG mediante `LEFT JOIN`.
-- `analytics.kpi_*`: vistas agregadas y reutilizables para cada indicador.
-- `audit`: hashes de fuentes, perfil agregado, duplicados exactos y controles de datos y KPIs contra los valores de referencia.
+![Arquitectura analítica Masterplop](docs/assets/architecture.svg)
 
-Los cinco archivos fuente permanecen intactos. `card_id` se mantiene como `VARCHAR`. Las salidas públicas de calidad son agregadas y no contienen números de tarjeta.
+- **`raw`:** copia inmutable de las 12 columnas del CSV como texto y del maestro MCG leído desde Excel.
+- **`staging`:** tipado explícito y normalización de identificadores, montos, flags, fechas, horas, productos y países.
+- **`analytics`:** hecho transaccional enriquecido mediante `LEFT JOIN`, vistas de KPIs y cálculo individual de cashback.
+- **`audit`:** hashes, perfil de fuentes, duplicados y 48 controles SQL contra referencias independientes.
+- **`dashboard`:** 11 agregados físicos sin identificadores individuales, exportados también a CSV/JSON para consumo público.
+
+`card_id` permanece como `VARCHAR` en las capas internas. El CSV original y DuckDB no se versionan; las salidas públicas tienen grano agregado.
 
 ## Estructura
 
 ```text
 .
-├── sql/
-│   ├── 00_schemas.sql
-│   ├── 01_ingest_transactions.sql
-│   ├── 10_staging.sql
-│   ├── 20_analytics.sql
-│   ├── 25_kpis.sql
-│   ├── 27_cashback.sql
-│   ├── 30_quality_checks.sql
-│   ├── 35_kpi_checks.sql
-│   ├── 37_cashback_checks.sql
-│   └── 40_dashboard_aggregates.sql
-├── src/
-│   └── pipeline.py
+├── .github/workflows/             # publicación Pages y control de entrega
 ├── dashboard/
-│   ├── app.py                      # aplicación Streamlit
-│   └── data_access.py              # acceso solo a tablas agregadas
-├── tests/
-│   ├── test_pipeline.py
-│   └── test_dashboard.py
+│   ├── app.py                     # aplicación principal Streamlit + Plotly
+│   └── data_access.py             # DuckDB con fallback a agregados públicos
 ├── data/processed/
-│   ├── masterplop.duckdb          # generado, ignorado por Git
-│   ├── quality_summary.csv        # generado, agregado
-│   ├── quality_summary.json       # generado, agregado + hashes
-│   ├── quality_summary.md         # generado, legible
-│   ├── kpi_validation.*           # pruebas SQL de indicadores
-│   ├── cashback_may_2024.json     # resultados agregados
-│   ├── cashback_may_2024.md       # reporte agregado legible
-│   └── kpis/
-│       ├── volume_quarterly.csv
-│       ├── credit_ticket_quarterly.csv
-│       ├── credit_ticket_south_america.csv
-│       ├── top_10_mcg_spend.csv
-│       ├── contactless_adoption.csv
-│       └── kpi_results.json
-└── requirements.txt
+│   ├── dashboard/                 # 11 datasets públicos seguros
+│   ├── kpis/                      # cinco indicadores exportados
+│   ├── cashback_may_2024.*
+│   └── quality_summary.*
+├── docs/assets/                   # infografías utilizadas en esta documentación
+├── sql/                           # ingesta, staging, analytics, KPIs y controles
+├── src/pipeline.py                # orquestación reproducible y reemplazo atómico
+├── tests/                         # calidad, KPIs, cashback, privacidad y dashboard
+├── index.html                     # dashboard ejecutivo publicado en GitHub Pages
+├── requirements.txt
+└── README.md
 ```
 
 ## Ejecución reproducible en Windows / PowerShell
@@ -284,13 +312,7 @@ ORDER BY status, check_name;
 
 ## Alcance y seguridad
 
-La base DuckDB contiene el detalle necesario para análisis interno, incluido `card_id`; no debe publicarse. Los CSV de KPIs, JSON/Markdown y tablas del esquema `dashboard` tienen grano agregado y no contienen identificadores individuales. La aplicación Streamlit permanece local y no se publica hasta completar la revisión visual.
-
-## Contexto y objetivo de negocio
-
-Masterplop necesita convertir un archivo transaccional heterogéneo en información de gestión confiable. El objetivo técnico es producir una base analítica reproducible y auditable; el objetivo de negocio es explicar actividad, gasto, comportamiento regional, mezcla de comercios y adopción contactless, y estimar con precisión el costo de una campaña de cashback para mayo de 2024.
-
-La solución se diseñó para conciliación: conserva los valores brutos, explicita cada normalización, no elimina ajustes negativos, mantiene las claves sin maestro y separa las fórmulas productivas de sus valores esperados de control.
+La base DuckDB contiene el detalle necesario para análisis interno, incluido `card_id`; por eso está excluida de Git. Los CSV, JSON y Markdown versionados tienen grano agregado y no contienen identificadores individuales. GitHub Pages consume exclusivamente el manifiesto público de 11 datasets; Streamlit usa DuckDB cuando está disponible y hace fallback a los mismos agregados seguros.
 
 ## Tecnologías utilizadas
 
@@ -299,6 +321,7 @@ La solución se diseñó para conciliación: conserva los valores brutos, explic
 - **pytest:** pruebas de datos, KPIs, cashback, seguridad de salidas y render de la aplicación.
 - **Streamlit y Plotly:** dashboard ejecutivo interactivo sobre agregados materializados.
 - **openpyxl y pandas:** integración con maestros y consumo tabular de resultados agregados.
+- **GitHub Pages y Actions:** publicación pública, HTTPS y validación continua del contrato de entrega.
 
 ## Diccionario breve del modelo final
 
@@ -338,6 +361,8 @@ Verificación ejecutada sobre los archivos fuente disponibles el **6 de noviembr
 | Controles SQL de datos | 20 de 20 | PASS |
 | Controles SQL de KPIs | 17 de 17 | PASS |
 | Controles SQL de cashback | 11 de 11 | PASS |
+| Pruebas Python | 36 de 36 | PASS |
+| Dashboard y manifiesto públicos | HTTP 200 / HTTP 200 | PASS |
 
 ## Riesgos, limitaciones y recomendaciones
 
@@ -345,9 +370,9 @@ Verificación ejecutada sobre los archivos fuente disponibles el **6 de noviembr
 - No existe producto prepago en la fuente. Agregarlo requeriría nueva evidencia, no una inferencia.
 - El código MCG 35 no está en el maestro. Se conserva como `Sin clasificar`; se recomienda solicitar su definición al dueño del dato.
 - `is_xb` contradice la geografía normalizada en 1.440.451 filas. Debe investigarse su linaje y no reutilizarse como regla de elegibilidad.
-- El CSV fuente y la base DuckDB contienen identificadores individuales y no deben versionarse ni publicarse. Un repositorio clonado necesitará recibir el CSV por un canal seguro y reconstruir los derivados.
-- El dashboard es una aplicación local y aún no tiene URL pública. Antes de publicar se recomienda una última revisión visual en las resoluciones objetivo, autenticación y política de acceso.
-- El repositorio no incluye CI. Como siguiente mejora se recomienda automatizar el pipeline y las pruebas en una rama protegida, manteniendo los datos fuente fuera de Git.
+- El CSV fuente y la base DuckDB contienen identificadores individuales y no se versionan. Un clon puede ejecutar y revisar el dashboard con los agregados públicos; para reconstruir toda la base necesita recibir el CSV por un canal seguro.
+- GitHub Pages es una vista pública de solo lectura. Streamlit sigue siendo la aplicación principal para exploración local y puede desplegarse más adelante si se requiere ejecución Python administrada.
+- La automatización pública valida documentación y artefactos seguros. Las pruebas completas del pipeline se ejecutan localmente porque el CSV transaccional no debe almacenarse en GitHub Actions.
 
 ## Política del repositorio
 
