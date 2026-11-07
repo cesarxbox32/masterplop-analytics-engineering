@@ -1,11 +1,14 @@
 <p align="center">
-  <img src="Masterplop%20logo.png" alt="Masterplop" width="230">
+  <a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/" title="Abrir dashboard ejecutivo">
+    <img src="Masterplop%20logo.png" alt="Logo Masterplop — abrir dashboard ejecutivo" width="230">
+  </a><br>
+  <strong><a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/">🌐 Ver dashboard ejecutivo en vivo</a></strong>
 </p>
 
 <h1 align="center">Masterplop Analytics Engineering</h1>
 
 <p align="center">
-  Base analítica reproducible, cinco indicadores ejecutivos y conciliación financiera de la campaña de cashback de mayo de 2024.
+  Pipeline auditable en DuckDB, cinco KPIs ejecutivos y conciliación monetaria de la campaña de cashback de mayo de 2024.
 </p>
 
 <p align="center">
@@ -17,7 +20,7 @@
 </p>
 
 <p align="center">
-  <strong><a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/">Abrir dashboard</a></strong>
+  <a href="#contexto-y-objetivo-de-negocio">Metodología</a>
   · <a href="#resultados-validados">Resultados</a>
   · <a href="#cashback-oficial--mayo-2024">Cashback</a>
   · <a href="#ejecución-reproducible-en-windows--powershell">Ejecutar</a>
@@ -36,10 +39,14 @@
 - [Dashboard ejecutivo](#dashboard-ejecutivo)
 - [Reglas de transformación](#reglas-de-transformación)
 - [Indicadores](#indicadores-y-decisiones-de-negocio)
+- [Resultados validados](#resultados-validados)
 - [Cashback](#cashback-oficial--mayo-2024)
 - [Calidad y controles](#matriz-de-controles-verificados)
+- [Seguridad y privacidad](#alcance-y-seguridad)
+- [Diccionario del modelo](#diccionario-breve-del-modelo-final)
 - [Riesgos y recomendaciones](#riesgos-limitaciones-y-recomendaciones)
 - [AI Log](#ai-log)
+- [Dashboard publicado](#enlace-al-dashboard)
 
 ## Contexto y objetivo de negocio
 
@@ -104,7 +111,14 @@ El pipeline construye primero `masterplop.building.duckdb` y reemplaza atómicam
 
 ## Dashboard ejecutivo
 
-El dashboard está implementado con Streamlit y Plotly. Localmente utiliza las tablas físicas pequeñas del esquema `dashboard`; en un clon o despliegue sin DuckDB utiliza automáticamente los CSV seguros de `data/processed/dashboard/`. Ambas fuentes se materializan durante el pipeline, tienen grano agregado y no contienen `card_id` ni registros transaccionales individuales.
+La solución ofrece dos interfaces complementarias sobre los mismos agregados validados:
+
+- **GitHub Pages:** versión ejecutiva pública en HTML, CSS y Plotly, optimizada para escritorio, tablet y móvil. Consume `data/processed/dashboard/manifest.json`, permite enlaces directos por sección y nunca consulta el CSV transaccional.
+- **Streamlit:** aplicación analítica para ejecución local. Utiliza las tablas físicas pequeñas del esquema `dashboard` y, si DuckDB no está disponible, cambia automáticamente a los CSV agregados seguros de `data/processed/dashboard/`.
+
+Ambas interfaces trabajan con grano agregado y no contienen `card_id` ni registros transaccionales individuales.
+
+> **Acceso directo:** [Resumen ejecutivo](https://cesarxbox32.github.io/masterplop-analytics-engineering/) · [Análisis transaccional](https://cesarxbox32.github.io/masterplop-analytics-engineering/#transactions) · [Campaña mayo 2024](https://cesarxbox32.github.io/masterplop-analytics-engineering/#campaign)
 
 ### Estructura
 
