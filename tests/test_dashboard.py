@@ -4,12 +4,14 @@ import sys
 from pathlib import Path
 
 import duckdb
+import pandas as pd
 import pytest
 from streamlit.testing.v1 import AppTest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT / "data" / "processed" / "masterplop.duckdb"
+AGGREGATE_DIR = ROOT / "data" / "processed" / "dashboard"
 sys.path.insert(0, str(ROOT / "dashboard"))
 
 from data_access import DashboardDataError, QUERIES, load_dashboard_data  # noqa: E402
@@ -44,6 +46,23 @@ def test_dashboard_reads_only_expected_aggregates(dashboard_data) -> None:
 def test_dashboard_missing_database_has_controlled_error(tmp_path: Path) -> None:
     with pytest.raises(DashboardDataError, match="Ejecuta src/pipeline.py primero"):
         load_dashboard_data(tmp_path / "missing.duckdb")
+
+
+def test_dashboard_can_run_from_public_aggregates_without_duckdb(tmp_path: Path) -> None:
+    data = load_dashboard_data(tmp_path / "missing.duckdb", AGGREGATE_DIR)
+    reference = load_dashboard_data(DB_PATH)
+    assert {name: len(frame) for name, frame in data.items()} == {
+        name: len(frame) for name, frame in reference.items()
+    }
+    assert all("card_id" not in frame.columns for frame in data.values())
+
+
+def test_public_dashboard_exports_are_complete_and_safe() -> None:
+    expected = {f"{name}.csv" for name in QUERIES} | {"manifest.json"}
+    assert {path.name for path in AGGREGATE_DIR.iterdir()} == expected
+    for csv_path in AGGREGATE_DIR.glob("*.csv"):
+        frame = pd.read_csv(csv_path, encoding="utf-8-sig")
+        assert "card_id" not in frame.columns
 
 
 def test_dashboard_schema_has_no_individual_card_identifier() -> None:

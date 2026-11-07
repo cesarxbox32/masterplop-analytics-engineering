@@ -53,6 +53,20 @@ KPI_EXPORTS = {
     """,
 }
 
+DASHBOARD_EXPORTS = {
+    "executive": "SELECT * FROM dashboard.executive_summary",
+    "volume": "SELECT * FROM dashboard.volume_quarterly ORDER BY period_year, period_quarter, product_type",
+    "quarterly_ticket": "SELECT * FROM dashboard.credit_ticket_quarterly ORDER BY period_year, period_quarter",
+    "regional_ticket": "SELECT * FROM dashboard.credit_ticket_south_america ORDER BY issuer_country, product_name",
+    "top_mcg": "SELECT * FROM dashboard.top_10_mcg_spend ORDER BY spend_rank",
+    "contactless": "SELECT * FROM dashboard.contactless_adoption ORDER BY contactless_net_spend_pct DESC NULLS LAST, issuer_country",
+    "cashback": "SELECT * FROM dashboard.cashback_summary",
+    "cashback_sensitivity": "SELECT * FROM dashboard.cashback_sensitivity",
+    "cashback_is_xb": "SELECT * FROM dashboard.cashback_is_xb_diagnostic",
+    "cashback_diagnostic": "SELECT * FROM dashboard.cashback_eligibility_diagnostic ORDER BY diagnostic_status",
+    "quality": "SELECT * FROM dashboard.data_quality_summary",
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -228,6 +242,17 @@ def fetch_cashback_results(
     return datasets
 
 
+def fetch_dashboard_results(
+    connection: duckdb.DuckDBPyConnection,
+) -> dict[str, tuple[list[str], list[tuple[object, ...]]]]:
+    datasets = {}
+    for dataset_name, query in DASHBOARD_EXPORTS.items():
+        result = connection.execute(query)
+        headers = [column[0] for column in result.description]
+        datasets[dataset_name] = (headers, result.fetchall())
+    return datasets
+
+
 def json_safe(value: object) -> object:
     if isinstance(value, Decimal):
         return str(value)
@@ -370,6 +395,37 @@ def write_kpi_validation_outputs(
         )
     (output_dir / "kpi_validation.md").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
+    )
+
+
+def write_dashboard_outputs(
+    output_dir: Path,
+    datasets: dict[str, tuple[list[str], list[tuple[object, ...]]]],
+) -> None:
+    dashboard_dir = output_dir / "dashboard"
+    dashboard_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "privacy": "Aggregated dashboard data only; no card_id or transaction-level rows.",
+        "datasets": {},
+    }
+    for dataset_name, (headers, rows) in datasets.items():
+        if any(header.lower() == "card_id" for header in headers):
+            raise RuntimeError(
+                f"La exportación pública {dataset_name} contiene card_id."
+            )
+        with (dashboard_dir / f"{dataset_name}.csv").open(
+            "w", encoding="utf-8-sig", newline=""
+        ) as stream:
+            writer = csv.writer(stream)
+            writer.writerow(headers)
+            writer.writerows(rows)
+        manifest["datasets"][dataset_name] = {
+            "row_count": len(rows),
+            "columns": headers,
+        }
+    (dashboard_dir / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
 
@@ -528,6 +584,7 @@ def build(output_dir: Path) -> Path:
 
         kpi_datasets = fetch_kpi_results(connection)
         cashback_datasets = fetch_cashback_results(connection)
+        dashboard_datasets = fetch_dashboard_results(connection)
         source_metadata = connection.execute(
             "SELECT file_name, sha256, size_bytes FROM audit.source_files ORDER BY file_name"
         ).fetchall()
@@ -545,6 +602,7 @@ def build(output_dir: Path) -> Path:
         cashback_check_headers,
         cashback_check_rows,
     )
+    write_dashboard_outputs(output_dir, dashboard_datasets)
 
     print(f"Base creada: {final_db}")
     print(f"Controles ejecutados: {len(rows)}; PASS: {len(rows) - len(failed)}; FAIL: {len(failed)}")

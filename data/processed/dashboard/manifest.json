@@ -1,0 +1,137 @@
+{
+  "generated_at_utc": "2026-11-07T02:29:21.307030+00:00",
+  "privacy": "Aggregated dashboard data only; no card_id or transaction-level rows.",
+  "datasets": {
+    "executive": {
+      "row_count": 1,
+      "columns": [
+        "active_cards",
+        "transaction_count",
+        "total_net_spend_usd",
+        "avg_transaction_amount_usd",
+        "total_cashback_usd",
+        "beneficiary_card_count",
+        "min_transaction_date",
+        "max_transaction_date"
+      ]
+    },
+    "volume": {
+      "row_count": 4,
+      "columns": [
+        "period_year",
+        "period_quarter",
+        "quarter_start_date",
+        "product_type",
+        "active_cards",
+        "transaction_count"
+      ]
+    },
+    "quarterly_ticket": {
+      "row_count": 2,
+      "columns": [
+        "period_year",
+        "period_quarter",
+        "quarter_start_date",
+        "net_spend_usd",
+        "active_credit_cards",
+        "net_spend_per_active_card_usd"
+      ]
+    },
+    "regional_ticket": {
+      "row_count": 45,
+      "columns": [
+        "issuer_country",
+        "product_name",
+        "transaction_count",
+        "net_spend_usd",
+        "avg_transaction_amount_usd"
+      ]
+    },
+    "top_mcg": {
+      "row_count": 10,
+      "columns": [
+        "spend_rank",
+        "mcg_code",
+        "mcg_code_original",
+        "mcg_name",
+        "net_spend_usd",
+        "net_spend_share_pct",
+        "transaction_count",
+        "global_net_spend_usd"
+      ]
+    },
+    "contactless": {
+      "row_count": 17,
+      "columns": [
+        "issuer_country",
+        "contactless_net_spend_usd",
+        "total_net_spend_usd",
+        "contactless_net_spend_pct",
+        "contactless_transaction_count",
+        "transaction_count"
+      ]
+    },
+    "cashback": {
+      "row_count": 1,
+      "columns": [
+        "campaign_month",
+        "eligible_transaction_count",
+        "positive_eligible_transaction_count",
+        "negative_eligible_transaction_count",
+        "eligible_card_count",
+        "beneficiary_card_count",
+        "capped_card_count",
+        "net_eligible_spend_usd",
+        "uncapped_cashback_rounded_usd",
+        "total_cashback_usd",
+        "cap_savings_usd",
+        "cashback_if_rounded_after_sum_usd",
+        "rounding_timing_difference_usd",
+        "seven_pct_of_global_net_spend_usd"
+      ]
+    },
+    "cashback_sensitivity": {
+      "row_count": 1,
+      "columns": [
+        "eligible_card_count",
+        "beneficiary_card_count",
+        "positive_eligible_transaction_count",
+        "positive_eligible_spend_usd",
+        "positive_only_cashback_usd",
+        "incremental_cost_vs_net_usd"
+      ]
+    },
+    "cashback_is_xb": {
+      "row_count": 1,
+      "columns": [
+        "is_xb_eligible_transaction_count",
+        "beneficiary_card_count",
+        "net_eligible_spend_usd",
+        "incorrect_is_xb_cashback_usd",
+        "difference_vs_official_usd"
+      ]
+    },
+    "cashback_diagnostic": {
+      "row_count": 4,
+      "columns": [
+        "diagnostic_status",
+        "transaction_count",
+        "net_spend_usd"
+      ]
+    },
+    "quality": {
+      "row_count": 1,
+      "columns": [
+        "row_count",
+        "invalid_amounts",
+        "invalid_dates",
+        "invalid_times",
+        "unclassified_mcg_transactions",
+        "is_xb_country_discrepancies",
+        "failed_data_quality_checks",
+        "failed_kpi_checks",
+        "failed_cashback_checks"
+      ]
+    }
+  }
+}

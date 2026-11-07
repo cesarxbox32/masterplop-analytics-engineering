@@ -13,6 +13,7 @@ from data_access import DashboardDataError, load_dashboard_data
 
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE_PATH = ROOT / "data" / "processed" / "masterplop.duckdb"
+AGGREGATE_DIR = ROOT / "data" / "processed" / "dashboard"
 LOGO_PATH = ROOT / "Masterplop logo.png"
 
 BLUE = "#1A56DB"
@@ -188,9 +189,13 @@ def style_figure(figure: go.Figure, height: int = 390) -> go.Figure:
 
 
 @st.cache_data(show_spinner="Cargando métricas agregadas…", ttl=3600)
-def cached_dashboard_data(database_path: str, modified_ns: int) -> dict[str, pd.DataFrame]:
-    del modified_ns
-    return load_dashboard_data(Path(database_path))
+def cached_dashboard_data(
+    database_path: str,
+    aggregate_dir: str,
+    source_version: int,
+) -> dict[str, pd.DataFrame]:
+    del source_version
+    return load_dashboard_data(Path(database_path), Path(aggregate_dir))
 
 
 def page_header(title: str, subtitle: str, period: str) -> None:
@@ -656,8 +661,16 @@ with st.sidebar:
 
 
 try:
-    database_mtime = DATABASE_PATH.stat().st_mtime_ns
-    dashboard_data = cached_dashboard_data(str(DATABASE_PATH), database_mtime)
+    if DATABASE_PATH.is_file():
+        source_version = DATABASE_PATH.stat().st_mtime_ns
+    else:
+        source_version = max(
+            (path.stat().st_mtime_ns for path in AGGREGATE_DIR.glob("*.csv")),
+            default=0,
+        )
+    dashboard_data = cached_dashboard_data(
+        str(DATABASE_PATH), str(AGGREGATE_DIR), source_version
+    )
 except (DashboardDataError, OSError) as error:
     st.error("No fue posible cargar los datos del dashboard.")
     st.code(str(error))

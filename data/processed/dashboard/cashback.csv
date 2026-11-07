@@ -1,0 +1,2 @@
+﻿campaign_month,eligible_transaction_count,positive_eligible_transaction_count,negative_eligible_transaction_count,eligible_card_count,beneficiary_card_count,capped_card_count,net_eligible_spend_usd,uncapped_cashback_rounded_usd,total_cashback_usd,cap_savings_usd,cashback_if_rounded_after_sum_usd,rounding_timing_difference_usd,seven_pct_of_global_net_spend_usd
+2024-05-01,28915,28885,30,4029,4029,2676,7319379.70,512358.63,178471.62,333887.01,178470.91,-0.71,512356.58

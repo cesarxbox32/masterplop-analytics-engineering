@@ -39,5 +39,6 @@ def test_readme_contains_delivery_governance_sections() -> None:
     )
     for section in required_sections:
         assert section in readme
-    assert "Pendiente de publicación tras la revisión final" in readme
+    assert "https://github.com/cesarxbox32/masterplop-analytics-engineering" in readme
+    assert "URL del dashboard" in readme
 

@@ -74,9 +74,9 @@ En este workspace también puede usarse el runtime aislado preparado durante la 
 
 El pipeline construye primero `masterplop.building.duckdb` y reemplaza atómicamente la base generada solo después de completar los controles. Nunca sobrescribe los cinco archivos fuente.
 
-## Dashboard ejecutivo local
+## Dashboard ejecutivo
 
-El dashboard está implementado con Streamlit y Plotly y utiliza exclusivamente tablas físicas pequeñas del esquema `dashboard`. Estas tablas se materializan durante el pipeline y no contienen `card_id` ni registros transaccionales individuales.
+El dashboard está implementado con Streamlit y Plotly. Localmente utiliza las tablas físicas pequeñas del esquema `dashboard`; en un clon o despliegue sin DuckDB utiliza automáticamente los CSV seguros de `data/processed/dashboard/`. Ambas fuentes se materializan durante el pipeline, tienen grano agregado y no contienen `card_id` ni registros transaccionales individuales.
 
 ### Estructura
 
@@ -109,7 +109,7 @@ Con el runtime aislado incluido en este workspace:
 & ".\.runtime\python\python.exe" -m streamlit run ".\dashboard\app.py"
 ```
 
-Abre `http://localhost:8501`. Si falta la base o alguna tabla agregada, la aplicación muestra un mensaje controlado con la instrucción de reconstrucción. El dashboard permanece local y no se publica en esta etapa.
+Abre `http://localhost:8501`. Si falta DuckDB, la aplicación utiliza los agregados versionados; si ambas fuentes faltan, muestra un mensaje controlado con la instrucción de reconstrucción.
 
 ## Reglas de transformación
 
@@ -361,4 +361,4 @@ La evidencia aceptada no depende de una respuesta de IA: cada cifra se recalcula
 
 ## Enlace al dashboard
 
-**Pendiente de publicación tras la revisión final.** No se incluye un enlace ficticio. Para revisarlo localmente, utiliza el comando Streamlit documentado arriba.
+El código fuente está disponible en [GitHub](https://github.com/cesarxbox32/masterplop-analytics-engineering). La URL del dashboard se incorpora aquí una vez finalizado el despliegue en Streamlit Community Cloud.

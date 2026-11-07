@@ -39,28 +39,51 @@ QUERIES = {
     "quality": "SELECT * FROM dashboard.data_quality_summary",
 }
 
+AGGREGATE_FILES = {name: f"{name}.csv" for name in QUERIES}
 
-def load_dashboard_data(database_path: Path) -> dict[str, pd.DataFrame]:
+
+def load_dashboard_data(
+    database_path: Path,
+    aggregate_dir: Path | None = None,
+) -> dict[str, pd.DataFrame]:
     database_path = database_path.resolve()
-    if not database_path.is_file():
-        raise DashboardDataError(
-            f"No existe la base agregada: {database_path}. Ejecuta src/pipeline.py primero."
-        )
+    aggregate_dir = (aggregate_dir or database_path.parent / "dashboard").resolve()
 
-    try:
-        connection = duckdb.connect(str(database_path), read_only=True)
+    if database_path.is_file():
+        try:
+            connection = duckdb.connect(str(database_path), read_only=True)
+            try:
+                datasets = {
+                    name: connection.execute(query).fetch_df()
+                    for name, query in QUERIES.items()
+                }
+            finally:
+                connection.close()
+        except (duckdb.Error, OSError) as error:
+            raise DashboardDataError(
+                "No fue posible leer las tablas agregadas desde DuckDB. "
+                "Reconstruye la base con src/pipeline.py."
+            ) from error
+    else:
+        missing = [
+            file_name
+            for file_name in AGGREGATE_FILES.values()
+            if not (aggregate_dir / file_name).is_file()
+        ]
+        if missing:
+            raise DashboardDataError(
+                "No existe DuckDB ni una exportación agregada completa. "
+                f"Faltan en {aggregate_dir}: {missing}. Ejecuta src/pipeline.py primero."
+            )
         try:
             datasets = {
-                name: connection.execute(query).fetch_df()
-                for name, query in QUERIES.items()
+                name: pd.read_csv(aggregate_dir / file_name, encoding="utf-8-sig")
+                for name, file_name in AGGREGATE_FILES.items()
             }
-        finally:
-            connection.close()
-    except (duckdb.Error, OSError) as error:
-        raise DashboardDataError(
-            "No fue posible leer las tablas agregadas del dashboard. "
-            "Reconstruye la base con src/pipeline.py."
-        ) from error
+        except (OSError, pd.errors.ParserError) as error:
+            raise DashboardDataError(
+                "No fue posible leer los CSV agregados del dashboard."
+            ) from error
 
     empty = [name for name, frame in datasets.items() if frame.empty]
     if empty:
