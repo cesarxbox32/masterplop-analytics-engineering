@@ -49,6 +49,9 @@ def test_public_static_dashboard_is_versioned() -> None:
     assert "data/processed/dashboard/manifest.json" in page
     assert "plotly" in page.lower()
     assert "card_id" not in page.lower()
+    assert "@media(max-width:700px)" in page
+    assert 'aria-selected="true"' in page
+    assert "Código y metodología" in page
 
     workflow = ROOT / ".github" / "workflows" / "pages.yml"
     assert workflow.is_file()
