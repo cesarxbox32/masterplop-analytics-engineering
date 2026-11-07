@@ -51,6 +51,15 @@ def test_public_static_dashboard_is_versioned() -> None:
     assert "card_id" not in page.lower()
     assert "@media(max-width:700px)" in page
     assert 'aria-selected="true"' in page
+    assert 'role="tablist"' in page
+    assert 'role="tabpanel"' in page
+    assert "prefers-reduced-motion" in page
+    assert "ResizeObserver" in page
+    assert "data-details" in page
+    assert "campaignWaterfall" in page
+    assert "campaignMatrix" in page
+    assert 'src="Masterplop%20logo.png"' in page
+    assert "raw.githubusercontent.com" not in page
     assert "Código y metodología" in page
 
     workflow = ROOT / ".github" / "workflows" / "pages.yml"

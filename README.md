@@ -387,6 +387,8 @@ La evidencia aceptada no depende de una respuesta de IA: cada cifra se recalcula
 ## Enlace al dashboard
 
 - **Dashboard público:** https://cesarxbox32.github.io/masterplop-analytics-engineering/
+- **Análisis transaccional:** https://cesarxbox32.github.io/masterplop-analytics-engineering/#transactions
+- **Campaña mayo 2024:** https://cesarxbox32.github.io/masterplop-analytics-engineering/#campaign
 - **Código fuente:** https://github.com/cesarxbox32/masterplop-analytics-engineering
 
-La publicación ejecutiva en GitHub Pages consume exactamente los agregados seguros generados por el pipeline. Streamlit permanece como la aplicación analítica principal para ejecución local o despliegue en un servicio compatible con Python.
+La publicación ejecutiva en GitHub Pages consume exactamente los agregados seguros generados por el pipeline. Su interfaz es responsive, permite navegar con teclado, respeta la preferencia de movimiento reducido y ofrece una tabla accesible detrás de cada gráfico. Streamlit permanece como la aplicación analítica principal para ejecución local o despliegue en un servicio compatible con Python.
