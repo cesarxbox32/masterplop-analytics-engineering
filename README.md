@@ -361,4 +361,7 @@ La evidencia aceptada no depende de una respuesta de IA: cada cifra se recalcula
 
 ## Enlace al dashboard
 
-El código fuente está disponible en [GitHub](https://github.com/cesarxbox32/masterplop-analytics-engineering). La URL del dashboard se incorpora aquí una vez finalizado el despliegue en Streamlit Community Cloud.
+- **Dashboard público:** https://cesarxbox32.github.io/masterplop-analytics-engineering/
+- **Código fuente:** https://github.com/cesarxbox32/masterplop-analytics-engineering
+
+La publicación ejecutiva en GitHub Pages consume exactamente los agregados seguros generados por el pipeline. Streamlit permanece como la aplicación analítica principal para ejecución local o despliegue en un servicio compatible con Python.

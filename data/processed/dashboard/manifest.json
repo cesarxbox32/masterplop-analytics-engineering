@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-07T02:29:21.307030+00:00",
+  "generated_at_utc": "2026-11-07T02:38:47.789308+00:00",
   "privacy": "Aggregated dashboard data only; no card_id or transaction-level rows.",
   "datasets": {
     "executive": {
@@ -13,6 +13,18 @@
         "beneficiary_card_count",
         "min_transaction_date",
         "max_transaction_date"
+      ],
+      "records": [
+        {
+          "active_cards": 59997,
+          "transaction_count": 2400000,
+          "total_net_spend_usd": "430124709.40",
+          "avg_transaction_amount_usd": "179.22",
+          "total_cashback_usd": "178471.62",
+          "beneficiary_card_count": 4029,
+          "min_transaction_date": "2024-01-01",
+          "max_transaction_date": "2024-06-30"
+        }
       ]
     },
     "volume": {
@@ -24,6 +36,40 @@
         "product_type",
         "active_cards",
         "transaction_count"
+      ],
+      "records": [
+        {
+          "period_year": 2024,
+          "period_quarter": 1,
+          "quarter_start_date": "2024-01-01",
+          "product_type": "Crédito",
+          "active_cards": 46747,
+          "transaction_count": 892949
+        },
+        {
+          "period_year": 2024,
+          "period_quarter": 1,
+          "quarter_start_date": "2024-01-01",
+          "product_type": "Débito",
+          "active_cards": 8224,
+          "transaction_count": 157051
+        },
+        {
+          "period_year": 2024,
+          "period_quarter": 2,
+          "quarter_start_date": "2024-04-01",
+          "product_type": "Crédito",
+          "active_cards": 51037,
+          "transaction_count": 1148010
+        },
+        {
+          "period_year": 2024,
+          "period_quarter": 2,
+          "quarter_start_date": "2024-04-01",
+          "product_type": "Débito",
+          "active_cards": 8960,
+          "transaction_count": 201990
+        }
       ]
     },
     "quarterly_ticket": {
@@ -35,6 +81,24 @@
         "net_spend_usd",
         "active_credit_cards",
         "net_spend_per_active_card_usd"
+      ],
+      "records": [
+        {
+          "period_year": 2024,
+          "period_quarter": 1,
+          "quarter_start_date": "2024-01-01",
+          "net_spend_usd": "150964927.10",
+          "active_credit_cards": 46747,
+          "net_spend_per_active_card_usd": "3229.40"
+        },
+        {
+          "period_year": 2024,
+          "period_quarter": 2,
+          "quarter_start_date": "2024-04-01",
+          "net_spend_usd": "256174004.20",
+          "active_credit_cards": 51037,
+          "net_spend_per_active_card_usd": "5019.38"
+        }
       ]
     },
     "regional_ticket": {
@@ -45,6 +109,323 @@
         "transaction_count",
         "net_spend_usd",
         "avg_transaction_amount_usd"
+      ],
+      "records": [
+        {
+          "issuer_country": "Argentina",
+          "product_name": "P1",
+          "transaction_count": 107587,
+          "net_spend_usd": "8430861.60",
+          "avg_transaction_amount_usd": "78.36"
+        },
+        {
+          "issuer_country": "Argentina",
+          "product_name": "P2",
+          "transaction_count": 91289,
+          "net_spend_usd": "12510203.80",
+          "avg_transaction_amount_usd": "137.04"
+        },
+        {
+          "issuer_country": "Argentina",
+          "product_name": "P3",
+          "transaction_count": 60906,
+          "net_spend_usd": "13086434.80",
+          "avg_transaction_amount_usd": "214.86"
+        },
+        {
+          "issuer_country": "Argentina",
+          "product_name": "P4",
+          "transaction_count": 31458,
+          "net_spend_usd": "21665833.70",
+          "avg_transaction_amount_usd": "688.72"
+        },
+        {
+          "issuer_country": "Argentina",
+          "product_name": "P5",
+          "transaction_count": 15041,
+          "net_spend_usd": "17740054.70",
+          "avg_transaction_amount_usd": "1179.45"
+        },
+        {
+          "issuer_country": "Bolivia",
+          "product_name": "P1",
+          "transaction_count": 11095,
+          "net_spend_usd": "340628.20",
+          "avg_transaction_amount_usd": "30.70"
+        },
+        {
+          "issuer_country": "Bolivia",
+          "product_name": "P2",
+          "transaction_count": 9832,
+          "net_spend_usd": "526237.60",
+          "avg_transaction_amount_usd": "53.52"
+        },
+        {
+          "issuer_country": "Bolivia",
+          "product_name": "P3",
+          "transaction_count": 5851,
+          "net_spend_usd": "480493.00",
+          "avg_transaction_amount_usd": "82.12"
+        },
+        {
+          "issuer_country": "Bolivia",
+          "product_name": "P4",
+          "transaction_count": 2907,
+          "net_spend_usd": "772966.10",
+          "avg_transaction_amount_usd": "265.90"
+        },
+        {
+          "issuer_country": "Bolivia",
+          "product_name": "P5",
+          "transaction_count": 1957,
+          "net_spend_usd": "898492.70",
+          "avg_transaction_amount_usd": "459.12"
+        },
+        {
+          "issuer_country": "Brasil",
+          "product_name": "P1",
+          "transaction_count": 142545,
+          "net_spend_usd": "11158853.00",
+          "avg_transaction_amount_usd": "78.28"
+        },
+        {
+          "issuer_country": "Brasil",
+          "product_name": "P2",
+          "transaction_count": 116578,
+          "net_spend_usd": "16021962.00",
+          "avg_transaction_amount_usd": "137.44"
+        },
+        {
+          "issuer_country": "Brasil",
+          "product_name": "P3",
+          "transaction_count": 84962,
+          "net_spend_usd": "18251690.00",
+          "avg_transaction_amount_usd": "214.82"
+        },
+        {
+          "issuer_country": "Brasil",
+          "product_name": "P4",
+          "transaction_count": 42669,
+          "net_spend_usd": "29140331.00",
+          "avg_transaction_amount_usd": "682.94"
+        },
+        {
+          "issuer_country": "Brasil",
+          "product_name": "P5",
+          "transaction_count": 20301,
+          "net_spend_usd": "23763927.30",
+          "avg_transaction_amount_usd": "1170.58"
+        },
+        {
+          "issuer_country": "Chile",
+          "product_name": "P1",
+          "transaction_count": 57462,
+          "net_spend_usd": "4478138.90",
+          "avg_transaction_amount_usd": "77.93"
+        },
+        {
+          "issuer_country": "Chile",
+          "product_name": "P2",
+          "transaction_count": 51183,
+          "net_spend_usd": "7027486.40",
+          "avg_transaction_amount_usd": "137.30"
+        },
+        {
+          "issuer_country": "Chile",
+          "product_name": "P3",
+          "transaction_count": 33567,
+          "net_spend_usd": "7239375.80",
+          "avg_transaction_amount_usd": "215.67"
+        },
+        {
+          "issuer_country": "Chile",
+          "product_name": "P4",
+          "transaction_count": 15995,
+          "net_spend_usd": "10973892.50",
+          "avg_transaction_amount_usd": "686.08"
+        },
+        {
+          "issuer_country": "Chile",
+          "product_name": "P5",
+          "transaction_count": 7647,
+          "net_spend_usd": "8965750.00",
+          "avg_transaction_amount_usd": "1172.45"
+        },
+        {
+          "issuer_country": "Colombia",
+          "product_name": "P1",
+          "transaction_count": 71561,
+          "net_spend_usd": "5591975.80",
+          "avg_transaction_amount_usd": "78.14"
+        },
+        {
+          "issuer_country": "Colombia",
+          "product_name": "P2",
+          "transaction_count": 59016,
+          "net_spend_usd": "8074121.00",
+          "avg_transaction_amount_usd": "136.81"
+        },
+        {
+          "issuer_country": "Colombia",
+          "product_name": "P3",
+          "transaction_count": 42397,
+          "net_spend_usd": "9146723.30",
+          "avg_transaction_amount_usd": "215.74"
+        },
+        {
+          "issuer_country": "Colombia",
+          "product_name": "P4",
+          "transaction_count": 18655,
+          "net_spend_usd": "12836681.80",
+          "avg_transaction_amount_usd": "688.11"
+        },
+        {
+          "issuer_country": "Colombia",
+          "product_name": "P5",
+          "transaction_count": 10163,
+          "net_spend_usd": "12166907.20",
+          "avg_transaction_amount_usd": "1197.18"
+        },
+        {
+          "issuer_country": "Ecuador",
+          "product_name": "P1",
+          "transaction_count": 38599,
+          "net_spend_usd": "1183595.50",
+          "avg_transaction_amount_usd": "30.66"
+        },
+        {
+          "issuer_country": "Ecuador",
+          "product_name": "P2",
+          "transaction_count": 30920,
+          "net_spend_usd": "1651847.00",
+          "avg_transaction_amount_usd": "53.42"
+        },
+        {
+          "issuer_country": "Ecuador",
+          "product_name": "P3",
+          "transaction_count": 21744,
+          "net_spend_usd": "1812904.80",
+          "avg_transaction_amount_usd": "83.37"
+        },
+        {
+          "issuer_country": "Ecuador",
+          "product_name": "P4",
+          "transaction_count": 9992,
+          "net_spend_usd": "2644050.80",
+          "avg_transaction_amount_usd": "264.62"
+        },
+        {
+          "issuer_country": "Ecuador",
+          "product_name": "P5",
+          "transaction_count": 5190,
+          "net_spend_usd": "2336605.00",
+          "avg_transaction_amount_usd": "450.21"
+        },
+        {
+          "issuer_country": "Paraguay",
+          "product_name": "P1",
+          "transaction_count": 3243,
+          "net_spend_usd": "99693.90",
+          "avg_transaction_amount_usd": "30.74"
+        },
+        {
+          "issuer_country": "Paraguay",
+          "product_name": "P2",
+          "transaction_count": 2843,
+          "net_spend_usd": "151101.40",
+          "avg_transaction_amount_usd": "53.15"
+        },
+        {
+          "issuer_country": "Paraguay",
+          "product_name": "P3",
+          "transaction_count": 1993,
+          "net_spend_usd": "167995.90",
+          "avg_transaction_amount_usd": "84.29"
+        },
+        {
+          "issuer_country": "Paraguay",
+          "product_name": "P4",
+          "transaction_count": 819,
+          "net_spend_usd": "225918.30",
+          "avg_transaction_amount_usd": "275.85"
+        },
+        {
+          "issuer_country": "Paraguay",
+          "product_name": "P5",
+          "transaction_count": 722,
+          "net_spend_usd": "309192.20",
+          "avg_transaction_amount_usd": "428.24"
+        },
+        {
+          "issuer_country": "Perú",
+          "product_name": "P1",
+          "transaction_count": 48650,
+          "net_spend_usd": "1485570.30",
+          "avg_transaction_amount_usd": "30.54"
+        },
+        {
+          "issuer_country": "Perú",
+          "product_name": "P2",
+          "transaction_count": 43137,
+          "net_spend_usd": "2307284.30",
+          "avg_transaction_amount_usd": "53.49"
+        },
+        {
+          "issuer_country": "Perú",
+          "product_name": "P3",
+          "transaction_count": 27137,
+          "net_spend_usd": "2268241.50",
+          "avg_transaction_amount_usd": "83.58"
+        },
+        {
+          "issuer_country": "Perú",
+          "product_name": "P4",
+          "transaction_count": 15337,
+          "net_spend_usd": "4094060.60",
+          "avg_transaction_amount_usd": "266.94"
+        },
+        {
+          "issuer_country": "Perú",
+          "product_name": "P5",
+          "transaction_count": 7343,
+          "net_spend_usd": "3384175.40",
+          "avg_transaction_amount_usd": "460.87"
+        },
+        {
+          "issuer_country": "Uruguay",
+          "product_name": "P1",
+          "transaction_count": 7434,
+          "net_spend_usd": "227069.30",
+          "avg_transaction_amount_usd": "30.54"
+        },
+        {
+          "issuer_country": "Uruguay",
+          "product_name": "P2",
+          "transaction_count": 6294,
+          "net_spend_usd": "332125.90",
+          "avg_transaction_amount_usd": "52.77"
+        },
+        {
+          "issuer_country": "Uruguay",
+          "product_name": "P3",
+          "transaction_count": 4181,
+          "net_spend_usd": "348886.50",
+          "avg_transaction_amount_usd": "83.45"
+        },
+        {
+          "issuer_country": "Uruguay",
+          "product_name": "P4",
+          "transaction_count": 2258,
+          "net_spend_usd": "598700.10",
+          "avg_transaction_amount_usd": "265.15"
+        },
+        {
+          "issuer_country": "Uruguay",
+          "product_name": "P5",
+          "transaction_count": 1100,
+          "net_spend_usd": "497400.30",
+          "avg_transaction_amount_usd": "452.18"
+        }
       ]
     },
     "top_mcg": {
@@ -58,6 +439,108 @@
         "net_spend_share_pct",
         "transaction_count",
         "global_net_spend_usd"
+      ],
+      "records": [
+        {
+          "spend_rank": 1,
+          "mcg_code": 1,
+          "mcg_code_original": "1",
+          "mcg_name": "Groceries and Supermarkets",
+          "net_spend_usd": "95335277.70",
+          "net_spend_share_pct": "22.1646",
+          "transaction_count": 529170,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 2,
+          "mcg_code": 2,
+          "mcg_code_original": "2",
+          "mcg_name": "Restaurants and Dining",
+          "net_spend_usd": "73646800.30",
+          "net_spend_share_pct": "17.1222",
+          "transaction_count": 411401,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 3,
+          "mcg_code": 3,
+          "mcg_code_original": "3",
+          "mcg_name": "Entertainment",
+          "net_spend_usd": "57648996.90",
+          "net_spend_share_pct": "13.4029",
+          "transaction_count": 321787,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 4,
+          "mcg_code": 4,
+          "mcg_code_original": "4",
+          "mcg_name": "Travel and Transportation",
+          "net_spend_usd": "44456008.00",
+          "net_spend_share_pct": "10.3356",
+          "transaction_count": 249349,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 5,
+          "mcg_code": 5,
+          "mcg_code_original": "5",
+          "mcg_name": "Clothing and Accessories",
+          "net_spend_usd": "34895828.60",
+          "net_spend_share_pct": "8.1130",
+          "transaction_count": 195217,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 6,
+          "mcg_code": 6,
+          "mcg_code_original": "6",
+          "mcg_name": "Electronics and Appliances",
+          "net_spend_usd": "27240838.00",
+          "net_spend_share_pct": "6.3332",
+          "transaction_count": 151582,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 7,
+          "mcg_code": 7,
+          "mcg_code_original": "7",
+          "mcg_name": "Health and Wellness",
+          "net_spend_usd": "21201287.40",
+          "net_spend_share_pct": "4.9291",
+          "transaction_count": 117898,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 8,
+          "mcg_code": 8,
+          "mcg_code_original": "8",
+          "mcg_name": "Home Improvement",
+          "net_spend_usd": "16422671.90",
+          "net_spend_share_pct": "3.8181",
+          "transaction_count": 91868,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 9,
+          "mcg_code": 9,
+          "mcg_code_original": "9",
+          "mcg_name": "Automotive",
+          "net_spend_usd": "12781091.30",
+          "net_spend_share_pct": "2.9715",
+          "transaction_count": 71661,
+          "global_net_spend_usd": "430124709.40"
+        },
+        {
+          "spend_rank": 10,
+          "mcg_code": 10,
+          "mcg_code_original": "10",
+          "mcg_name": "Education and Books",
+          "net_spend_usd": "9947750.20",
+          "net_spend_share_pct": "2.3128",
+          "transaction_count": 55898,
+          "global_net_spend_usd": "430124709.40"
+        }
       ]
     },
     "contactless": {
@@ -69,6 +552,144 @@
         "contactless_net_spend_pct",
         "contactless_transaction_count",
         "transaction_count"
+      ],
+      "records": [
+        {
+          "issuer_country": "México",
+          "contactless_net_spend_usd": "71490980.10",
+          "total_net_spend_usd": "101737839.30",
+          "contactless_net_spend_pct": "70.2698",
+          "contactless_transaction_count": 334283,
+          "transaction_count": 476398
+        },
+        {
+          "issuer_country": "Colombia",
+          "contactless_net_spend_usd": "35496570.60",
+          "total_net_spend_usd": "50539932.00",
+          "contactless_net_spend_pct": "70.2347",
+          "contactless_transaction_count": 166915,
+          "transaction_count": 238211
+        },
+        {
+          "issuer_country": "Brasil",
+          "contactless_net_spend_usd": "72913471.80",
+          "total_net_spend_usd": "103963916.70",
+          "contactless_net_spend_pct": "70.1334",
+          "contactless_transaction_count": 333549,
+          "transaction_count": 476516
+        },
+        {
+          "issuer_country": "Argentina",
+          "contactless_net_spend_usd": "54204722.60",
+          "total_net_spend_usd": "77380661.70",
+          "contactless_net_spend_pct": "70.0494",
+          "contactless_transaction_count": 250805,
+          "transaction_count": 358609
+        },
+        {
+          "issuer_country": "Chile",
+          "contactless_net_spend_usd": "28675062.60",
+          "total_net_spend_usd": "40966821.90",
+          "contactless_net_spend_pct": "69.9958",
+          "contactless_transaction_count": 135887,
+          "transaction_count": 194259
+        },
+        {
+          "issuer_country": "El Salvador",
+          "contactless_net_spend_usd": "450128.00",
+          "total_net_spend_usd": "2166031.50",
+          "contactless_net_spend_pct": "20.7812",
+          "contactless_transaction_count": 5382,
+          "transaction_count": 26145
+        },
+        {
+          "issuer_country": "Costa Rica",
+          "contactless_net_spend_usd": "444658.70",
+          "total_net_spend_usd": "2189504.30",
+          "contactless_net_spend_pct": "20.3086",
+          "contactless_transaction_count": 4926,
+          "transaction_count": 24453
+        },
+        {
+          "issuer_country": "Bolivia",
+          "contactless_net_spend_usd": "643627.70",
+          "total_net_spend_usd": "3196962.60",
+          "contactless_net_spend_pct": "20.1325",
+          "contactless_transaction_count": 7396,
+          "transaction_count": 37336
+        },
+        {
+          "issuer_country": "República Dominicana",
+          "contactless_net_spend_usd": "646618.40",
+          "total_net_spend_usd": "3214802.60",
+          "contactless_net_spend_pct": "20.1138",
+          "contactless_transaction_count": 7532,
+          "transaction_count": 38139
+        },
+        {
+          "issuer_country": "Perú",
+          "contactless_net_spend_usd": "2874670.20",
+          "total_net_spend_usd": "14343726.90",
+          "contactless_net_spend_pct": "20.0413",
+          "contactless_transaction_count": 33785,
+          "transaction_count": 168548
+        },
+        {
+          "issuer_country": "Uruguay",
+          "contactless_net_spend_usd": "421015.50",
+          "total_net_spend_usd": "2109981.90",
+          "contactless_net_spend_pct": "19.9535",
+          "contactless_transaction_count": 4947,
+          "transaction_count": 24814
+        },
+        {
+          "issuer_country": "Ecuador",
+          "contactless_net_spend_usd": "2021731.70",
+          "total_net_spend_usd": "10135754.20",
+          "contactless_net_spend_pct": "19.9465",
+          "contactless_transaction_count": 24853,
+          "transaction_count": 124301
+        },
+        {
+          "issuer_country": "Panamá",
+          "contactless_net_spend_usd": "2017095.00",
+          "total_net_spend_usd": "10205114.50",
+          "contactless_net_spend_pct": "19.7655",
+          "contactless_transaction_count": 23539,
+          "transaction_count": 117495
+        },
+        {
+          "issuer_country": "Nicaragua",
+          "contactless_net_spend_usd": "201558.90",
+          "total_net_spend_usd": "1023735.60",
+          "contactless_net_spend_pct": "19.6886",
+          "contactless_transaction_count": 2523,
+          "transaction_count": 12692
+        },
+        {
+          "issuer_country": "Honduras",
+          "contactless_net_spend_usd": "375471.10",
+          "total_net_spend_usd": "1915601.40",
+          "contactless_net_spend_pct": "19.6007",
+          "contactless_transaction_count": 4384,
+          "transaction_count": 22319
+        },
+        {
+          "issuer_country": "Guatemala",
+          "contactless_net_spend_usd": "787151.60",
+          "total_net_spend_usd": "4019727.00",
+          "contactless_net_spend_pct": "19.5822",
+          "contactless_transaction_count": 9476,
+          "transaction_count": 47615
+        },
+        {
+          "issuer_country": "Paraguay",
+          "contactless_net_spend_usd": "194652.20",
+          "total_net_spend_usd": "1014595.30",
+          "contactless_net_spend_pct": "19.1852",
+          "contactless_transaction_count": 2440,
+          "transaction_count": 12150
+        }
       ]
     },
     "cashback": {
@@ -88,6 +709,24 @@
         "cashback_if_rounded_after_sum_usd",
         "rounding_timing_difference_usd",
         "seven_pct_of_global_net_spend_usd"
+      ],
+      "records": [
+        {
+          "campaign_month": "2024-05-01",
+          "eligible_transaction_count": 28915,
+          "positive_eligible_transaction_count": 28885,
+          "negative_eligible_transaction_count": 30,
+          "eligible_card_count": 4029,
+          "beneficiary_card_count": 4029,
+          "capped_card_count": 2676,
+          "net_eligible_spend_usd": "7319379.70",
+          "uncapped_cashback_rounded_usd": "512358.63",
+          "total_cashback_usd": "178471.62",
+          "cap_savings_usd": "333887.01",
+          "cashback_if_rounded_after_sum_usd": "178470.91",
+          "rounding_timing_difference_usd": "-0.71",
+          "seven_pct_of_global_net_spend_usd": "512356.58"
+        }
       ]
     },
     "cashback_sensitivity": {
@@ -99,6 +738,16 @@
         "positive_eligible_spend_usd",
         "positive_only_cashback_usd",
         "incremental_cost_vs_net_usd"
+      ],
+      "records": [
+        {
+          "eligible_card_count": 4029,
+          "beneficiary_card_count": 4029,
+          "positive_eligible_transaction_count": 28885,
+          "positive_eligible_spend_usd": "7327231.90",
+          "positive_only_cashback_usd": "178608.88",
+          "incremental_cost_vs_net_usd": "137.26"
+        }
       ]
     },
     "cashback_is_xb": {
@@ -109,6 +758,15 @@
         "net_eligible_spend_usd",
         "incorrect_is_xb_cashback_usd",
         "difference_vs_official_usd"
+      ],
+      "records": [
+        {
+          "is_xb_eligible_transaction_count": 15655,
+          "beneficiary_card_count": 3955,
+          "net_eligible_spend_usd": "3928958.30",
+          "incorrect_is_xb_cashback_usd": "135160.88",
+          "difference_vs_official_usd": "-43310.74"
+        }
       ]
     },
     "cashback_diagnostic": {
@@ -117,6 +775,28 @@
         "diagnostic_status",
         "transaction_count",
         "net_spend_usd"
+      ],
+      "records": [
+        {
+          "diagnostic_status": "Coincide: elegible por ambos",
+          "transaction_count": 14394,
+          "net_spend_usd": "3600026.60"
+        },
+        {
+          "diagnostic_status": "Incluida erróneamente por is_xb",
+          "transaction_count": 1261,
+          "net_spend_usd": "328931.70"
+        },
+        {
+          "diagnostic_status": "No elegible por ambos",
+          "transaction_count": 1286,
+          "net_spend_usd": "329943.40"
+        },
+        {
+          "diagnostic_status": "Omitida por is_xb",
+          "transaction_count": 14521,
+          "net_spend_usd": "3719353.10"
+        }
       ]
     },
     "quality": {
@@ -131,6 +811,19 @@
         "failed_data_quality_checks",
         "failed_kpi_checks",
         "failed_cashback_checks"
+      ],
+      "records": [
+        {
+          "row_count": 2400000,
+          "invalid_amounts": 0,
+          "invalid_dates": 0,
+          "invalid_times": 0,
+          "unclassified_mcg_transactions": 12000,
+          "is_xb_country_discrepancies": 1440451,
+          "failed_data_quality_checks": 0,
+          "failed_kpi_checks": 0,
+          "failed_cashback_checks": 0
+        }
       ]
     }
   }

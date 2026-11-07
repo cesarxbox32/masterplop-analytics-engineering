@@ -423,6 +423,13 @@ def write_dashboard_outputs(
         manifest["datasets"][dataset_name] = {
             "row_count": len(rows),
             "columns": headers,
+            "records": [
+                {
+                    header: json_safe(value)
+                    for header, value in zip(headers, row, strict=True)
+                }
+                for row in rows
+            ],
         }
     (dashboard_dir / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"

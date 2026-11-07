@@ -40,5 +40,16 @@ def test_readme_contains_delivery_governance_sections() -> None:
     for section in required_sections:
         assert section in readme
     assert "https://github.com/cesarxbox32/masterplop-analytics-engineering" in readme
-    assert "URL del dashboard" in readme
+    assert "https://cesarxbox32.github.io/masterplop-analytics-engineering/" in readme
+
+
+def test_public_static_dashboard_is_versioned() -> None:
+    page = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert "MASTERPLOP" in page
+    assert "data/processed/dashboard/manifest.json" in page
+    assert "plotly" in page.lower()
+    assert "card_id" not in page.lower()
+
+    workflow = ROOT / ".github" / "workflows" / "pages.yml"
+    assert workflow.is_file()
 

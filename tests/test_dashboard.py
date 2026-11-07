@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -63,6 +64,12 @@ def test_public_dashboard_exports_are_complete_and_safe() -> None:
     for csv_path in AGGREGATE_DIR.glob("*.csv"):
         frame = pd.read_csv(csv_path, encoding="utf-8-sig")
         assert "card_id" not in frame.columns
+
+    manifest = json.loads((AGGREGATE_DIR / "manifest.json").read_text(encoding="utf-8"))
+    assert set(manifest["datasets"]) == set(QUERIES)
+    for dataset in manifest["datasets"].values():
+        assert "card_id" not in dataset["columns"]
+        assert all("card_id" not in record for record in dataset["records"])
 
 
 def test_dashboard_schema_has_no_individual_card_identifier() -> None:
