@@ -1,0 +1,141 @@
+{
+  "generated_at_utc": "2026-11-07T02:10:00.670730+00:00",
+  "checks": [
+    {
+      "check_name": "contactless_zero_denominator_guard",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Si el gasto total de un país es cero, el porcentaje debe ser NULL."
+    },
+    {
+      "check_name": "global_net_spend",
+      "severity": "error",
+      "actual_value": "430124709.40",
+      "expected_value": "430124709.40",
+      "status": "PASS",
+      "details": "SUM(amt) de todas las transacciones, incluidos ajustes negativos y MCG sin maestro."
+    },
+    {
+      "check_name": "mcg_35_preserved_in_category_base",
+      "severity": "error",
+      "actual_value": "1",
+      "expected_value": "1",
+      "status": "PASS",
+      "details": "El código original 35 permanece como Sin clasificar en la base completa de categorías."
+    },
+    {
+      "check_name": "mcg_category_total_reconciles",
+      "severity": "error",
+      "actual_value": "430124709.40",
+      "expected_value": "430124709.40",
+      "status": "PASS",
+      "details": "La suma de todas las categorías, incluida Sin clasificar, reconcilia con el gasto neto global."
+    },
+    {
+      "check_name": "mcg_transaction_count_reconciles",
+      "severity": "error",
+      "actual_value": "2400000",
+      "expected_value": "2400000",
+      "status": "PASS",
+      "details": "Las categorías, incluido el código 35 sin maestro, cubren todas las transacciones."
+    },
+    {
+      "check_name": "no_invented_prepaid_rows",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "La vista de volumen no agrega tipos de producto inexistentes."
+    },
+    {
+      "check_name": "regional_only_south_america",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "La salida regional contiene solo países emisores sudamericanos."
+    },
+    {
+      "check_name": "ticket_2024_q1",
+      "severity": "error",
+      "actual_value": "3229.40",
+      "expected_value": "3229.40",
+      "status": "PASS",
+      "details": "SUM(amt) neto de crédito / COUNT(DISTINCT card_id), 2024 T1."
+    },
+    {
+      "check_name": "ticket_2024_q2",
+      "severity": "error",
+      "actual_value": "5019.38",
+      "expected_value": "5019.38",
+      "status": "PASS",
+      "details": "SUM(amt) neto de crédito / COUNT(DISTINCT card_id), 2024 T2."
+    },
+    {
+      "check_name": "top_10_row_count",
+      "severity": "error",
+      "actual_value": "10",
+      "expected_value": "10",
+      "status": "PASS",
+      "details": "El ranking final contiene exactamente diez categorías."
+    },
+    {
+      "check_name": "top_share_entertainment",
+      "severity": "error",
+      "actual_value": "13.4029",
+      "expected_value": "approximately 13.40",
+      "status": "PASS",
+      "details": "Participación porcentual sobre gasto neto global; tolerancia 0,02 puntos porcentuales."
+    },
+    {
+      "check_name": "top_share_groceries",
+      "severity": "error",
+      "actual_value": "22.1646",
+      "expected_value": "approximately 22.16",
+      "status": "PASS",
+      "details": "Participación porcentual sobre gasto neto global; tolerancia 0,02 puntos porcentuales."
+    },
+    {
+      "check_name": "top_share_restaurants",
+      "severity": "error",
+      "actual_value": "17.1222",
+      "expected_value": "approximately 17.12",
+      "status": "PASS",
+      "details": "Participación porcentual sobre gasto neto global; tolerancia 0,02 puntos porcentuales."
+    },
+    {
+      "check_name": "volume_2024_q1_credit",
+      "severity": "error",
+      "actual_value": "46747",
+      "expected_value": "46747",
+      "status": "PASS",
+      "details": "COUNT(DISTINCT card_id), Crédito, 2024 T1."
+    },
+    {
+      "check_name": "volume_2024_q1_debit",
+      "severity": "error",
+      "actual_value": "8224",
+      "expected_value": "8224",
+      "status": "PASS",
+      "details": "COUNT(DISTINCT card_id), Débito, 2024 T1."
+    },
+    {
+      "check_name": "volume_2024_q2_credit",
+      "severity": "error",
+      "actual_value": "51037",
+      "expected_value": "51037",
+      "status": "PASS",
+      "details": "COUNT(DISTINCT card_id), Crédito, 2024 T2."
+    },
+    {
+      "check_name": "volume_2024_q2_debit",
+      "severity": "error",
+      "actual_value": "8960",
+      "expected_value": "8960",
+      "status": "PASS",
+      "details": "COUNT(DISTINCT card_id), Débito, 2024 T2."
+    }
+  ]
+}

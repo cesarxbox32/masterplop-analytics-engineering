@@ -1,0 +1,250 @@
+{
+  "generated_at_utc": "2026-11-07T02:10:00.671731+00:00",
+  "privacy": "Aggregated results only; no card_id values are exported.",
+  "datasets": {
+    "official_summary": {
+      "columns": [
+        "campaign_month",
+        "eligible_transaction_count",
+        "positive_eligible_transaction_count",
+        "negative_eligible_transaction_count",
+        "eligible_card_count",
+        "beneficiary_card_count",
+        "capped_card_count",
+        "net_eligible_spend_usd",
+        "uncapped_cashback_rounded_usd",
+        "total_cashback_usd",
+        "cap_savings_usd",
+        "cashback_if_rounded_after_sum_usd",
+        "rounding_timing_difference_usd",
+        "seven_pct_of_global_net_spend_usd"
+      ],
+      "row_count": 1,
+      "records": [
+        {
+          "campaign_month": "2024-05-01",
+          "eligible_transaction_count": 28915,
+          "positive_eligible_transaction_count": 28885,
+          "negative_eligible_transaction_count": 30,
+          "eligible_card_count": 4029,
+          "beneficiary_card_count": 4029,
+          "capped_card_count": 2676,
+          "net_eligible_spend_usd": "7319379.70",
+          "uncapped_cashback_rounded_usd": "512358.63",
+          "total_cashback_usd": "178471.62",
+          "cap_savings_usd": "333887.01",
+          "cashback_if_rounded_after_sum_usd": "178470.91",
+          "rounding_timing_difference_usd": "-0.71",
+          "seven_pct_of_global_net_spend_usd": "512356.58"
+        }
+      ]
+    },
+    "positive_only_sensitivity": {
+      "columns": [
+        "eligible_card_count",
+        "beneficiary_card_count",
+        "positive_eligible_transaction_count",
+        "positive_eligible_spend_usd",
+        "positive_only_cashback_usd",
+        "incremental_cost_vs_net_usd"
+      ],
+      "row_count": 1,
+      "records": [
+        {
+          "eligible_card_count": 4029,
+          "beneficiary_card_count": 4029,
+          "positive_eligible_transaction_count": 28885,
+          "positive_eligible_spend_usd": "7327231.90",
+          "positive_only_cashback_usd": "178608.88",
+          "incremental_cost_vs_net_usd": "137.26"
+        }
+      ]
+    },
+    "incorrect_is_xb_summary": {
+      "columns": [
+        "is_xb_eligible_transaction_count",
+        "beneficiary_card_count",
+        "net_eligible_spend_usd",
+        "incorrect_is_xb_cashback_usd",
+        "difference_vs_official_usd"
+      ],
+      "row_count": 1,
+      "records": [
+        {
+          "is_xb_eligible_transaction_count": 15655,
+          "beneficiary_card_count": 3955,
+          "net_eligible_spend_usd": "3928958.30",
+          "incorrect_is_xb_cashback_usd": "135160.88",
+          "difference_vs_official_usd": "-43310.74"
+        }
+      ]
+    },
+    "eligibility_diagnostic": {
+      "columns": [
+        "diagnostic_status",
+        "transaction_count",
+        "net_spend_usd"
+      ],
+      "row_count": 4,
+      "records": [
+        {
+          "diagnostic_status": "Coincide: elegible por ambos",
+          "transaction_count": 14394,
+          "net_spend_usd": "3600026.60"
+        },
+        {
+          "diagnostic_status": "Incluida erróneamente por is_xb",
+          "transaction_count": 1261,
+          "net_spend_usd": "328931.70"
+        },
+        {
+          "diagnostic_status": "No elegible por ambos",
+          "transaction_count": 1286,
+          "net_spend_usd": "329943.40"
+        },
+        {
+          "diagnostic_status": "Omitida por is_xb",
+          "transaction_count": 14521,
+          "net_spend_usd": "3719353.10"
+        }
+      ]
+    },
+    "boundary_tests": {
+      "columns": [
+        "test_name",
+        "net_spend_usd",
+        "actual_cashback_usd",
+        "expected_cashback_usd",
+        "status"
+      ],
+      "row_count": 5,
+      "records": [
+        {
+          "test_name": "compra pequeña",
+          "net_spend_usd": "10.000000",
+          "actual_cashback_usd": "0.70",
+          "expected_cashback_usd": "0.70",
+          "status": "PASS"
+        },
+        {
+          "test_name": "gasto en umbral",
+          "net_spend_usd": "714.285714",
+          "actual_cashback_usd": "50.00",
+          "expected_cashback_usd": "50.00",
+          "status": "PASS"
+        },
+        {
+          "test_name": "gasto superior al tope",
+          "net_spend_usd": "1000.000000",
+          "actual_cashback_usd": "50.00",
+          "expected_cashback_usd": "50.00",
+          "status": "PASS"
+        },
+        {
+          "test_name": "saldo negativo",
+          "net_spend_usd": "-100.000000",
+          "actual_cashback_usd": "0.00",
+          "expected_cashback_usd": "0.00",
+          "status": "PASS"
+        },
+        {
+          "test_name": "sin compras",
+          "net_spend_usd": null,
+          "actual_cashback_usd": "0.00",
+          "expected_cashback_usd": "0.00",
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check_name": "beneficiary_cards",
+      "severity": "error",
+      "actual_value": "4029",
+      "expected_value": "4029",
+      "status": "PASS",
+      "details": "Tarjetas con cashback individual mayor que cero."
+    },
+    {
+      "check_name": "boundary_tests",
+      "severity": "error",
+      "actual_value": "5",
+      "expected_value": "5",
+      "status": "PASS",
+      "details": "Casos sin compras, saldo negativo, compra pequeña, umbral y monto superior al tope."
+    },
+    {
+      "check_name": "capped_cards",
+      "severity": "error",
+      "actual_value": "2676",
+      "expected_value": "2676",
+      "status": "PASS",
+      "details": "Tarjetas cuyo 7% previo al redondeo supera USD 50."
+    },
+    {
+      "check_name": "eligible_transactions",
+      "severity": "error",
+      "actual_value": "28915",
+      "expected_value": "28915",
+      "status": "PASS",
+      "details": "Mayo 2024, crédito, emisor Chile y comercio fuera de Chile."
+    },
+    {
+      "check_name": "incorrect_is_xb_total",
+      "severity": "warning",
+      "actual_value": "135160.88",
+      "expected_value": "135160.88",
+      "status": "PASS",
+      "details": "Costo erróneo al sustituir comercio fuera de Chile por is_xb=1."
+    },
+    {
+      "check_name": "individual_rounding_reconciliation",
+      "severity": "error",
+      "actual_value": "178471.62",
+      "expected_value": "178471.62",
+      "status": "PASS",
+      "details": "El total oficial reconcilia con la suma de importes individuales ya redondeados."
+    },
+    {
+      "check_name": "negative_eligible_transactions",
+      "severity": "error",
+      "actual_value": "30",
+      "expected_value": "30",
+      "status": "PASS",
+      "details": "Ajustes o devoluciones elegibles con amt < 0, conservados en el escenario oficial."
+    },
+    {
+      "check_name": "net_eligible_spend",
+      "severity": "error",
+      "actual_value": "7319379.70",
+      "expected_value": "7319379.70",
+      "status": "PASS",
+      "details": "Gasto mensual neto elegible después de descontar ajustes negativos."
+    },
+    {
+      "check_name": "official_total_cashback",
+      "severity": "error",
+      "actual_value": "178471.62",
+      "expected_value": "178471.62",
+      "status": "PASS",
+      "details": "Suma de cashback redondeado individualmente después de piso y tope."
+    },
+    {
+      "check_name": "positive_eligible_transactions",
+      "severity": "error",
+      "actual_value": "28885",
+      "expected_value": "28885",
+      "status": "PASS",
+      "details": "Transacciones geográficamente elegibles con amt > 0."
+    },
+    {
+      "check_name": "positive_only_sensitivity",
+      "severity": "error",
+      "actual_value": "178608.88",
+      "expected_value": "178608.88",
+      "status": "PASS",
+      "details": "Sensibilidad que excluye ajustes negativos en vez de descontarlos."
+    }
+  ]
+}

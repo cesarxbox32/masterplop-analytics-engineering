@@ -1,0 +1,12 @@
+CREATE SCHEMA IF NOT EXISTS raw;
+CREATE SCHEMA IF NOT EXISTS staging;
+CREATE SCHEMA IF NOT EXISTS analytics;
+CREATE SCHEMA IF NOT EXISTS audit;
+
+CREATE TABLE audit.source_files (
+    file_name VARCHAR NOT NULL,
+    sha256 VARCHAR NOT NULL,
+    size_bytes BIGINT NOT NULL,
+    modified_at_utc TIMESTAMP NOT NULL,
+    ingested_at_utc TIMESTAMP NOT NULL
+);

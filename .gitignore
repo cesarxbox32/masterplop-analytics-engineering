@@ -1,0 +1,45 @@
+# Entornos y cachés locales
+.runtime/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+# Datos fuente no versionables
+db_transac.csv
+data/raw/
+
+# Artefactos Power BI fuera del alcance del entregable
+powerbi/
+data/processed/powerbi/
+*.pbix
+*.pbit
+
+# Bases locales y archivos temporales de DuckDB
+**/*.duckdb
+**/*.duckdb.wal
+**/*.duckdb.tmp
+
+# Secretos y credenciales
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+credentials*.json
+secrets*.json
+*.pem
+*.key
+
+# Temporales de trabajo e instalación
+tmp/
+python-*-amd64.exe
+python-*-embed-amd64.zip
+python-install.log
+*.log
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

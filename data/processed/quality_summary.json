@@ -1,0 +1,192 @@
+{
+  "generated_at_utc": "2026-11-07T02:10:00.666620+00:00",
+  "checks": [
+    {
+      "check_name": "credit_transactions",
+      "severity": "error",
+      "actual_value": "2040959",
+      "expected_value": "2040959",
+      "status": "PASS",
+      "details": "Credit/Credito/Crédito normalizados a Crédito."
+    },
+    {
+      "check_name": "date_range",
+      "severity": "error",
+      "actual_value": "2024-01-01 to 2024-06-30",
+      "expected_value": "2024-01-01 to 2024-06-30",
+      "status": "PASS",
+      "details": "Cobertura temporal luego de parsear DD/MM/YYYY y DD-MM-YYYY."
+    },
+    {
+      "check_name": "debit_transactions",
+      "severity": "error",
+      "actual_value": "359041",
+      "expected_value": "359041",
+      "status": "PASS",
+      "details": "Debit/Debito/Débito normalizados a Débito."
+    },
+    {
+      "check_name": "distinct_cards",
+      "severity": "error",
+      "actual_value": "59997",
+      "expected_value": "59997",
+      "status": "PASS",
+      "details": "card_id se cuenta como identificador VARCHAR."
+    },
+    {
+      "check_name": "identical_duplicate_rows",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Duplicados exactos sobre las 12 columnas originales."
+    },
+    {
+      "check_name": "invalid_amounts",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Valores amt que no convierten a DECIMAL(18,2)."
+    },
+    {
+      "check_name": "invalid_dates",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Fechas que no convierten con los dos formatos permitidos."
+    },
+    {
+      "check_name": "invalid_is_contactless",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Flags is_contactless fuera de 0/1 o nulos."
+    },
+    {
+      "check_name": "invalid_is_xb",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Flags is_xb fuera de 0/1 o nulos."
+    },
+    {
+      "check_name": "invalid_times",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Horas que no convierten con HH:MM:SS o HH.MM.SS."
+    },
+    {
+      "check_name": "is_xb_country_discrepancies",
+      "severity": "warning",
+      "actual_value": "1440451",
+      "expected_value": "1440451",
+      "status": "PASS",
+      "details": "Diferencias entre is_xb original y comparación de países normalizados. No define cashback."
+    },
+    {
+      "check_name": "is_xb_not_comparable",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Filas sin flag o países suficientes para validar is_xb."
+    },
+    {
+      "check_name": "mcg_35_transactions",
+      "severity": "warning",
+      "actual_value": "12000",
+      "expected_value": "12000",
+      "status": "PASS",
+      "details": "Código original 35, ausente del maestro MCG."
+    },
+    {
+      "check_name": "mcg_master_unique_keys",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Claves duplicadas en el maestro provocarían multiplicación de filas."
+    },
+    {
+      "check_name": "negative_transactions",
+      "severity": "warning",
+      "actual_value": "2400",
+      "expected_value": "2400",
+      "status": "PASS",
+      "details": "Montos negativos conservados en DECIMAL(18,2)."
+    },
+    {
+      "check_name": "original_column_count",
+      "severity": "error",
+      "actual_value": "12",
+      "expected_value": "12",
+      "status": "PASS",
+      "details": "Columnas originales, excluyendo source_row_number."
+    },
+    {
+      "check_name": "row_preservation_after_left_join",
+      "severity": "error",
+      "actual_value": "2400000",
+      "expected_value": "2400000",
+      "status": "PASS",
+      "details": "La capa analítica no elimina transacciones."
+    },
+    {
+      "check_name": "transaction_count",
+      "severity": "error",
+      "actual_value": "2400000",
+      "expected_value": "2400000",
+      "status": "PASS",
+      "details": "Filas de transacciones preservadas."
+    },
+    {
+      "check_name": "unclassified_mcg_transactions",
+      "severity": "warning",
+      "actual_value": "12000",
+      "expected_value": "12000",
+      "status": "PASS",
+      "details": "LEFT JOIN preserva estas filas y asigna Sin clasificar."
+    },
+    {
+      "check_name": "unknown_product_type",
+      "severity": "error",
+      "actual_value": "0",
+      "expected_value": "0",
+      "status": "PASS",
+      "details": "Tipos no incluidos en las reglas explícitas; no se imputan."
+    }
+  ],
+  "source_files": [
+    {
+      "file_name": "Diccionario.xlsx",
+      "sha256": "1ECF1F32E37B140E1909E556469868028AE6F058755E66EF43BD49926B6DF056",
+      "size_bytes": 5874
+    },
+    {
+      "file_name": "Instrucciones Desafío.pdf",
+      "sha256": "2C933442CBAC68CC537C5EFCA808D3B7EC8969B2D643410786A49625F0097A7B",
+      "size_bytes": 2110575
+    },
+    {
+      "file_name": "Masterplop logo.png",
+      "sha256": "3B4F741AB7391596F470F4C710609C06A2529252C10EE6D6CDD5E4C40AE9E0BC",
+      "size_bytes": 1255932
+    },
+    {
+      "file_name": "db_transac.csv",
+      "sha256": "0F84041134BC0031CC03A0505E77CDCC5128AE28DC33528B2E2021F86F801F22",
+      "size_bytes": 207514545
+    },
+    {
+      "file_name": "mcg_list.xlsx",
+      "sha256": "C2890D9C55888E25B9D1EFD16BF973F08C2239C92F775321ED97AF0B41A185D0",
+      "size_bytes": 9987
+    }
+  ]
+}
