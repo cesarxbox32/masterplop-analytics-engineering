@@ -1,0 +1,65 @@
+table quarterly_ticket
+	lineageTag: f8ea9520-9e94-4fa1-a2f4-f5ea0332aee3
+
+	column period_year
+		dataType: int64
+		formatString: #,0
+		lineageTag: 44a4a3af-3947-420d-b494-88034891dc1c
+		summarizeBy: sum
+		sourceColumn: period_year
+
+	column period_quarter
+		dataType: int64
+		formatString: #,0
+		lineageTag: 764ecd0a-66fb-495a-b0b9-115f59492f34
+		summarizeBy: sum
+		sourceColumn: period_quarter
+
+	column quarter_start_date
+		dataType: dateTime
+		formatString: dd-MM-yyyy
+		lineageTag: 142ae242-0731-40ad-9db8-7b0c23df8f6d
+		summarizeBy: none
+		sourceColumn: quarter_start_date
+
+	column net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: b87338b2-d668-4f29-a1ab-3ea84e4dd200
+		summarizeBy: sum
+		sourceColumn: net_spend_usd
+
+	column active_credit_cards
+		dataType: int64
+		formatString: #,0
+		lineageTag: 901bfd34-8f4b-4998-b207-82460dee40fa
+		summarizeBy: sum
+		sourceColumn: active_credit_cards
+
+	column net_spend_per_active_card_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 58dd049e-a0b1-4786-b560-8738a2ec3247
+		summarizeBy: sum
+		sourceColumn: net_spend_per_active_card_usd
+
+	column period_label
+		dataType: string
+		sortByColumn: quarter_start_date
+		lineageTag: beb1d572-b262-48e8-9f87-981d04f08e96
+		summarizeBy: none
+		sourceColumn: period_label
+
+	partition quarterly_ticket = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/cGVyaW9kX3llYXIscGVyaW9kX3F1YXJ0ZXIscXVhcnRlcl9zdGFydF9kYXRlLG5ldF9zcGVuZF91c2QsYWN0aXZlX2NyZWRpdF9jYXJkcyxuZXRfc3BlbmRfcGVyX2FjdGl2ZV9jYXJkX3VzZA0KMjAyNCwxLDIwMjQtMDEtMDEsMTUwOTY0OTI3LjEwLDQ2NzQ3LDMyMjkuNDANCjIwMjQsMiwyMDI0LTA0LTAxLDI1NjE3NDAwNC4yMCw1MTAzNyw1MDE5LjM4DQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"period_year", Int64.Type}, {"period_quarter", Int64.Type}, {"quarter_start_date", type date}, {"net_spend_usd", Currency.Type}, {"active_credit_cards", Int64.Type}, {"net_spend_per_active_card_usd", Currency.Type}}, "en-US"),
+				    WithPeriod = Table.AddColumn(Typed, "period_label", each Text.From([period_year]) & " T" & Text.From([period_quarter]), type text)
+				in
+				    WithPeriod
+
+	annotation PBI_ResultType = Table

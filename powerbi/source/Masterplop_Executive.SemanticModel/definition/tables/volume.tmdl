@@ -1,0 +1,64 @@
+table volume
+	lineageTag: b0bd8592-9c7f-4977-a093-33cc0cc93111
+
+	column period_year
+		dataType: int64
+		formatString: #,0
+		lineageTag: 8ae2b0a9-2745-40ce-98ad-827f4cf1ab86
+		summarizeBy: sum
+		sourceColumn: period_year
+
+	column period_quarter
+		dataType: int64
+		formatString: #,0
+		lineageTag: e75a435b-c32a-4803-a8b0-195f644445e4
+		summarizeBy: sum
+		sourceColumn: period_quarter
+
+	column quarter_start_date
+		dataType: dateTime
+		formatString: dd-MM-yyyy
+		lineageTag: b5143806-d466-45fe-bb6c-fed95c9a30fe
+		summarizeBy: none
+		sourceColumn: quarter_start_date
+
+	column product_type
+		dataType: string
+		lineageTag: 87802fd3-423e-4a1e-9145-7caa81ad326c
+		summarizeBy: none
+		sourceColumn: product_type
+
+	column active_cards
+		dataType: int64
+		formatString: #,0
+		lineageTag: 44e1a745-e0e9-4c3a-9d83-798c36a065b0
+		summarizeBy: sum
+		sourceColumn: active_cards
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3d0c83e5-f952-4648-890b-c59628ce7722
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	column period_label
+		dataType: string
+		sortByColumn: quarter_start_date
+		lineageTag: fc66a32b-b43d-4f6a-bf92-d913662a9e36
+		summarizeBy: none
+		sourceColumn: period_label
+
+	partition volume = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/cGVyaW9kX3llYXIscGVyaW9kX3F1YXJ0ZXIscXVhcnRlcl9zdGFydF9kYXRlLHByb2R1Y3RfdHlwZSxhY3RpdmVfY2FyZHMsdHJhbnNhY3Rpb25fY291bnQNCjIwMjQsMSwyMDI0LTAxLTAxLENyw6lkaXRvLDQ2NzQ3LDg5Mjk0OQ0KMjAyNCwxLDIwMjQtMDEtMDEsRMOpYml0byw4MjI0LDE1NzA1MQ0KMjAyNCwyLDIwMjQtMDQtMDEsQ3LDqWRpdG8sNTEwMzcsMTE0ODAxMA0KMjAyNCwyLDIwMjQtMDQtMDEsRMOpYml0byw4OTYwLDIwMTk5MA0K",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"period_year", Int64.Type}, {"period_quarter", Int64.Type}, {"quarter_start_date", type date}, {"product_type", type text}, {"active_cards", Int64.Type}, {"transaction_count", Int64.Type}}, "en-US"),
+				    WithPeriod = Table.AddColumn(Typed, "period_label", each Text.From([period_year]) & " T" & Text.From([period_quarter]), type text)
+				in
+				    WithPeriod
+
+	annotation PBI_ResultType = Table

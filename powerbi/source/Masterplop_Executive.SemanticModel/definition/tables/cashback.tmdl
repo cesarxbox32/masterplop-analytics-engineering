@@ -1,0 +1,113 @@
+table cashback
+	lineageTag: 7789fec2-1d2c-4d72-8154-204e64a50e20
+
+	column campaign_month
+		dataType: dateTime
+		formatString: dd-MM-yyyy
+		lineageTag: c9e36b5d-dea9-4545-bd71-7f31008ca75e
+		summarizeBy: none
+		sourceColumn: campaign_month
+
+	column eligible_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2ad54d60-a331-42cb-acbb-9a88887ca1fb
+		summarizeBy: sum
+		sourceColumn: eligible_transaction_count
+
+	column positive_eligible_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 91b51561-9008-4b13-a689-d7fb72e29421
+		summarizeBy: sum
+		sourceColumn: positive_eligible_transaction_count
+
+	column negative_eligible_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: de8105ed-9355-4665-8df3-a11479db3c6f
+		summarizeBy: sum
+		sourceColumn: negative_eligible_transaction_count
+
+	column eligible_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 5212c852-2ca9-4a05-84bd-87d29b50c717
+		summarizeBy: sum
+		sourceColumn: eligible_card_count
+
+	column beneficiary_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 99df8c02-65f2-4acc-8652-5af3b47f179e
+		summarizeBy: sum
+		sourceColumn: beneficiary_card_count
+
+	column capped_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7a88cffa-2fe9-4613-b30d-9f27b7528b73
+		summarizeBy: sum
+		sourceColumn: capped_card_count
+
+	column net_eligible_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 8e987296-0d19-43b6-a1ba-384a452c370d
+		summarizeBy: sum
+		sourceColumn: net_eligible_spend_usd
+
+	column uncapped_cashback_rounded_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 3b4c1634-2ea5-42aa-a9f3-697cd2d2e148
+		summarizeBy: sum
+		sourceColumn: uncapped_cashback_rounded_usd
+
+	column total_cashback_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 4d3b2b6b-6a99-4350-aca1-d34b81d731e5
+		summarizeBy: sum
+		sourceColumn: total_cashback_usd
+
+	column cap_savings_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 1b4d587f-1441-4147-a799-61e80b22bc8d
+		summarizeBy: sum
+		sourceColumn: cap_savings_usd
+
+	column cashback_if_rounded_after_sum_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: ad836b30-fce3-41ef-9f62-42e282eb0bab
+		summarizeBy: sum
+		sourceColumn: cashback_if_rounded_after_sum_usd
+
+	column rounding_timing_difference_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: a80b12b8-6b6c-407a-ae9b-bcbf39b8ea65
+		summarizeBy: sum
+		sourceColumn: rounding_timing_difference_usd
+
+	column seven_pct_of_global_net_spend_usd
+		dataType: decimal
+		formatString: 0.00
+		lineageTag: b59b735a-f638-4145-8530-8fafab0952e4
+		summarizeBy: sum
+		sourceColumn: seven_pct_of_global_net_spend_usd
+
+	partition cashback = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/Y2FtcGFpZ25fbW9udGgsZWxpZ2libGVfdHJhbnNhY3Rpb25fY291bnQscG9zaXRpdmVfZWxpZ2libGVfdHJhbnNhY3Rpb25fY291bnQsbmVnYXRpdmVfZWxpZ2libGVfdHJhbnNhY3Rpb25fY291bnQsZWxpZ2libGVfY2FyZF9jb3VudCxiZW5lZmljaWFyeV9jYXJkX2NvdW50LGNhcHBlZF9jYXJkX2NvdW50LG5ldF9lbGlnaWJsZV9zcGVuZF91c2QsdW5jYXBwZWRfY2FzaGJhY2tfcm91bmRlZF91c2QsdG90YWxfY2FzaGJhY2tfdXNkLGNhcF9zYXZpbmdzX3VzZCxjYXNoYmFja19pZl9yb3VuZGVkX2FmdGVyX3N1bV91c2Qscm91bmRpbmdfdGltaW5nX2RpZmZlcmVuY2VfdXNkLHNldmVuX3BjdF9vZl9nbG9iYWxfbmV0X3NwZW5kX3VzZA0KMjAyNC0wNS0wMSwyODkxNSwyODg4NSwzMCw0MDI5LDQwMjksMjY3Niw3MzE5Mzc5LjcwLDUxMjM1OC42MywxNzg0NzEuNjIsMzMzODg3LjAxLDE3ODQ3MC45MSwtMC43MSw1MTIzNTYuNTgNCg==",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"campaign_month", type date}, {"eligible_transaction_count", Int64.Type}, {"positive_eligible_transaction_count", Int64.Type}, {"negative_eligible_transaction_count", Int64.Type}, {"eligible_card_count", Int64.Type}, {"beneficiary_card_count", Int64.Type}, {"capped_card_count", Int64.Type}, {"net_eligible_spend_usd", Currency.Type}, {"uncapped_cashback_rounded_usd", Currency.Type}, {"total_cashback_usd", Currency.Type}, {"cap_savings_usd", Currency.Type}, {"cashback_if_rounded_after_sum_usd", Currency.Type}, {"rounding_timing_difference_usd", Currency.Type}, {"seven_pct_of_global_net_spend_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

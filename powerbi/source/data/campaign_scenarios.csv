@@ -1,0 +1,4 @@
+scenario_order,scenario,amount_usd
+1,Oficial neto,178471.62
+2,Sin descontar devoluciones,178608.88
+3,is_xb incorrecto,135160.88

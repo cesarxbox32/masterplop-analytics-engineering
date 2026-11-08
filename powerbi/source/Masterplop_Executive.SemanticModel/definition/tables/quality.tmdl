@@ -1,0 +1,78 @@
+table quality
+	lineageTag: d5e14044-39e4-449b-a51a-d948fa6a46a6
+
+	column row_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 4e2b9a1b-6618-4f0f-8aa0-78ccdbe33214
+		summarizeBy: sum
+		sourceColumn: row_count
+
+	column invalid_amounts
+		dataType: int64
+		formatString: #,0
+		lineageTag: 598a4e0d-f859-43eb-806d-3423bc07f2ea
+		summarizeBy: sum
+		sourceColumn: invalid_amounts
+
+	column invalid_dates
+		dataType: int64
+		formatString: #,0
+		lineageTag: fbdd4967-c9ba-47f6-9df2-9bcad6988b31
+		summarizeBy: sum
+		sourceColumn: invalid_dates
+
+	column invalid_times
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1bb7875f-a43a-48bf-bca0-cbcc57c9c842
+		summarizeBy: sum
+		sourceColumn: invalid_times
+
+	column unclassified_mcg_transactions
+		dataType: int64
+		formatString: #,0
+		lineageTag: e5cb6910-c58f-44c2-b2d5-dab00892d895
+		summarizeBy: sum
+		sourceColumn: unclassified_mcg_transactions
+
+	column is_xb_country_discrepancies
+		dataType: int64
+		formatString: #,0
+		lineageTag: 70c4152d-5e51-4523-991a-f039eaebd5f4
+		summarizeBy: sum
+		sourceColumn: is_xb_country_discrepancies
+
+	column failed_data_quality_checks
+		dataType: int64
+		formatString: #,0
+		lineageTag: 48249967-10c3-4677-b97f-46231af65734
+		summarizeBy: sum
+		sourceColumn: failed_data_quality_checks
+
+	column failed_kpi_checks
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2b5ea0a0-6f74-40fe-a8dd-ac67748d4cd2
+		summarizeBy: sum
+		sourceColumn: failed_kpi_checks
+
+	column failed_cashback_checks
+		dataType: int64
+		formatString: #,0
+		lineageTag: f2a3167a-1fd6-4053-b858-d24c085a02fa
+		summarizeBy: sum
+		sourceColumn: failed_cashback_checks
+
+	partition quality = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/cm93X2NvdW50LGludmFsaWRfYW1vdW50cyxpbnZhbGlkX2RhdGVzLGludmFsaWRfdGltZXMsdW5jbGFzc2lmaWVkX21jZ190cmFuc2FjdGlvbnMsaXNfeGJfY291bnRyeV9kaXNjcmVwYW5jaWVzLGZhaWxlZF9kYXRhX3F1YWxpdHlfY2hlY2tzLGZhaWxlZF9rcGlfY2hlY2tzLGZhaWxlZF9jYXNoYmFja19jaGVja3MNCjI0MDAwMDAsMCwwLDAsMTIwMDAsMTQ0MDQ1MSwwLDAsMA0K",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"row_count", Int64.Type}, {"invalid_amounts", Int64.Type}, {"invalid_dates", Int64.Type}, {"invalid_times", Int64.Type}, {"unclassified_mcg_transactions", Int64.Type}, {"is_xb_country_discrepancies", Int64.Type}, {"failed_data_quality_checks", Int64.Type}, {"failed_kpi_checks", Int64.Type}, {"failed_cashback_checks", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

@@ -2,7 +2,7 @@
   <a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/" title="Abrir dashboard ejecutivo">
     <img src="Masterplop%20logo.png" alt="Logo Masterplop — abrir dashboard ejecutivo" width="230">
   </a><br>
-  <strong><a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/">🌐 Ver dashboard ejecutivo en vivo</a></strong>
+  <strong><a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/">🌐 Ver dashboard ejecutivo en vivo</a> · <a href="powerbi/Masterplop_Executive.pbix">📊 Descargar Power BI</a></strong>
 </p>
 
 <h1 align="center">Masterplop Analytics Engineering</h1>
@@ -13,6 +13,8 @@
 
 <p align="center">
   <a href="https://cesarxbox32.github.io/masterplop-analytics-engineering/"><img alt="Dashboard Live" src="https://img.shields.io/badge/Dashboard-Live-1A56DB?style=for-the-badge&logo=plotly&logoColor=white"></a>
+  <a href="powerbi/Masterplop_Executive.pbix"><img alt="Descargar Power BI" src="https://img.shields.io/badge/Power_BI-Descargar_PBIX-F2C811?style=for-the-badge&logo=powerbi&logoColor=172033"></a>
+  <a href="powerbi/Masterplop_Executive.pdf"><img alt="Vista PDF" src="https://img.shields.io/badge/Reporte-Ver_PDF-7C3AED?style=for-the-badge&logo=adobeacrobatreader&logoColor=white"></a>
   <a href="https://github.com/cesarxbox32/masterplop-analytics-engineering/actions/workflows/pages.yml"><img alt="GitHub Pages" src="https://img.shields.io/github/actions/workflow/status/cesarxbox32/masterplop-analytics-engineering/pages.yml?branch=main&style=for-the-badge&label=Pages"></a>
   <a href="https://github.com/cesarxbox32/masterplop-analytics-engineering/actions/workflows/quality.yml"><img alt="Quality" src="https://img.shields.io/github/actions/workflow/status/cesarxbox32/masterplop-analytics-engineering/quality.yml?branch=main&style=for-the-badge&label=Quality"></a>
   <img alt="Python" src="https://img.shields.io/badge/Python-3.12-FBBF24?style=for-the-badge&logo=python&logoColor=172033">
@@ -22,6 +24,7 @@
 <p align="center">
   <a href="#contexto-y-objetivo-de-negocio">Metodología</a>
   · <a href="#resultados-validados">Resultados</a>
+  · <a href="#power-bi-desktop">Power BI</a>
   · <a href="#cashback-oficial--mayo-2024">Cashback</a>
   · <a href="#ejecución-reproducible-en-windows--powershell">Ejecutar</a>
   · <a href="#ai-log">AI Log</a>
@@ -37,6 +40,7 @@
 - [Arquitectura](#arquitectura)
 - [Ejecución reproducible](#ejecución-reproducible-en-windows--powershell)
 - [Dashboard ejecutivo](#dashboard-ejecutivo)
+- [Power BI Desktop](#power-bi-desktop)
 - [Reglas de transformación](#reglas-de-transformación)
 - [Indicadores](#indicadores-y-decisiones-de-negocio)
 - [Resultados validados](#resultados-validados)
@@ -79,7 +83,14 @@ La implementación privilegia la conciliación: conserva valores brutos, documen
 │   ├── kpis/                      # cinco indicadores exportados
 │   ├── cashback_may_2024.*
 │   └── quality_summary.*
-├── docs/assets/                   # infografías utilizadas en esta documentación
+├── docs/assets/                   # arquitectura, controles y vistas Power BI
+├── powerbi/
+│   ├── Masterplop_Executive.pbix  # reporte compilado para Power BI Desktop
+│   ├── Masterplop_Executive.pdf   # vista navegable de las tres páginas
+│   ├── source/                    # PBIP, PBIR y TMDL portables y auditables
+│   ├── generate_masterplop_powerbi.js
+│   ├── validate_powerbi.ps1
+│   └── README_POWERBI.md
 ├── sql/                           # ingesta, staging, analytics, KPIs y controles
 ├── src/pipeline.py                # orquestación reproducible y reemplazo atómico
 ├── tests/                         # calidad, KPIs, cashback, privacidad y dashboard
@@ -111,12 +122,19 @@ El pipeline construye primero `masterplop.building.duckdb` y reemplaza atómicam
 
 ## Dashboard ejecutivo
 
-La solución ofrece dos interfaces complementarias sobre los mismos agregados validados:
+La solución ofrece tres experiencias complementarias, todas alimentadas por los mismos agregados conciliados y sin identificadores individuales:
 
-- **GitHub Pages:** versión ejecutiva pública en HTML, CSS y Plotly, optimizada para escritorio, tablet y móvil. Consume `data/processed/dashboard/manifest.json`, permite enlaces directos por sección y nunca consulta el CSV transaccional.
-- **Streamlit:** aplicación analítica para ejecución local. Utiliza las tablas físicas pequeñas del esquema `dashboard` y, si DuckDB no está disponible, cambia automáticamente a los CSV agregados seguros de `data/processed/dashboard/`.
+| Experiencia | Uso recomendado | Acceso |
+|---|---|---|
+| **GitHub Pages** | Revisión pública, responsive e interactiva desde cualquier navegador | [Abrir dashboard](https://cesarxbox32.github.io/masterplop-analytics-engineering/) |
+| **Power BI Desktop** | Presentación ejecutiva, inspección del modelo semántico y medidas DAX | [Descargar PBIX](powerbi/Masterplop_Executive.pbix) |
+| **Streamlit** | Exploración local con Python, DuckDB y Plotly | `python -m streamlit run dashboard/app.py` |
 
-Ambas interfaces trabajan con grano agregado y no contienen `card_id` ni registros transaccionales individuales.
+- **GitHub Pages:** versión ejecutiva pública en HTML, CSS y Plotly, optimizada para escritorio, tablet y móvil. Consume `data/processed/dashboard/manifest.json` y nunca consulta el CSV transaccional.
+- **Power BI Desktop:** reporte de tres páginas, 49 visuales, 15 tablas agregadas y 39 medidas DAX. El proyecto PBIP portable integra los pequeños agregados como Base64 y no contiene rutas personales.
+- **Streamlit:** aplicación analítica local que usa las tablas físicas del esquema `dashboard` y cambia a CSV agregados seguros si DuckDB no está disponible.
+
+Las tres interfaces trabajan con grano agregado y no contienen `card_id` ni registros transaccionales individuales.
 
 > **Acceso directo:** [Resumen ejecutivo](https://cesarxbox32.github.io/masterplop-analytics-engineering/) · [Análisis transaccional](https://cesarxbox32.github.io/masterplop-analytics-engineering/#transactions) · [Campaña mayo 2024](https://cesarxbox32.github.io/masterplop-analytics-engineering/#campaign)
 
@@ -152,6 +170,51 @@ Con el runtime aislado incluido en este workspace:
 ```
 
 Abre `http://localhost:8501`. Si falta DuckDB, la aplicación utiliza los agregados versionados; si ambas fuentes faltan, muestra un mensaje controlado con la instrucción de reconstrucción.
+
+## Power BI Desktop
+
+El reporte Power BI replica la narrativa ejecutiva validada y permanece desacoplado de los 2,4 millones de registros transaccionales. GitHub no ejecuta archivos `.pbix` de forma interactiva; por eso esta entrega combina vistas previas verificables, una exportación PDF navegable, el archivo compilado y el proyecto PBIP auditable.
+
+<p align="center">
+  <a href="docs/assets/powerbi/01-resumen-ejecutivo.png">
+    <img src="docs/assets/powerbi/01-resumen-ejecutivo.png" alt="Power BI — Resumen Ejecutivo" width="31%">
+  </a>
+  <a href="docs/assets/powerbi/02-analisis-transaccional.png">
+    <img src="docs/assets/powerbi/02-analisis-transaccional.png" alt="Power BI — Análisis Transaccional" width="31%">
+  </a>
+  <a href="docs/assets/powerbi/03-campana-mayo-2024.png">
+    <img src="docs/assets/powerbi/03-campana-mayo-2024.png" alt="Power BI — Campaña Mayo 2024" width="31%">
+  </a>
+</p>
+
+<p align="center">
+  <strong>Resumen Ejecutivo</strong> ·
+  <strong>Análisis Transaccional</strong> ·
+  <strong>Campaña Mayo 2024</strong>
+</p>
+
+### Accesos
+
+- **Reporte compilado:** [descargar `Masterplop_Executive.pbix`](powerbi/Masterplop_Executive.pbix).
+- **Vista inmediata:** [abrir el reporte exportado a PDF](powerbi/Masterplop_Executive.pdf).
+- **Proyecto auditable:** [abrir el PBIP portable](powerbi/source/Masterplop_Executive.pbip).
+- **Documentación:** [guía de Power BI](powerbi/README_POWERBI.md) y [protocolo de validación](powerbi/VALIDACION_POWERBI.md).
+
+### Abrir o regenerar en Windows
+
+```powershell
+# Abrir la copia compilada
+Start-Process -FilePath ".\powerbi\Masterplop_Executive.pbix"
+
+# Abrir el proyecto como código
+Start-Process -FilePath ".\powerbi\source\Masterplop_Executive.pbip"
+
+# Regenerar el PBIP portable y validar la entrega
+node ".\powerbi\generate_masterplop_powerbi.js"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\powerbi\validate_powerbi.ps1"
+```
+
+El modelo usa modo Import sobre 15 extractos agregados. Las consultas M embeben esos pequeños extractos en Base64 para que el PBIP sea portable; no publican rutas locales, credenciales ni conexiones al archivo transaccional. El PBIX es la copia de consumo y el PBIP es la fuente reproducible y auditable.
 
 ## Reglas de transformación
 
@@ -326,7 +389,7 @@ ORDER BY status, check_name;
 
 ## Alcance y seguridad
 
-La base DuckDB contiene el detalle necesario para análisis interno, incluido `card_id`; por eso está excluida de Git. Los CSV, JSON y Markdown versionados tienen grano agregado y no contienen identificadores individuales. GitHub Pages consume exclusivamente el manifiesto público de 11 datasets; Streamlit usa DuckDB cuando está disponible y hace fallback a los mismos agregados seguros.
+La base DuckDB contiene el detalle necesario para análisis interno, incluido `card_id`; por eso está excluida de Git. Los CSV, JSON y Markdown versionados tienen grano agregado y no contienen identificadores individuales. GitHub Pages, Streamlit y Power BI consumen exclusivamente agregados seguros. El PBIX y el PDF publicados fueron escaneados antes de versionarse; el PBIP portable no contiene rutas personales, credenciales, `card_id` ni referencias al CSV transaccional.
 
 ## Tecnologías utilizadas
 
@@ -334,6 +397,7 @@ La base DuckDB contiene el detalle necesario para análisis interno, incluido `c
 - **Python 3.12:** orquestación, lectura controlada de Excel, hashes, exportaciones y pruebas.
 - **pytest:** pruebas de datos, KPIs, cashback, seguridad de salidas y render de la aplicación.
 - **Streamlit y Plotly:** dashboard ejecutivo interactivo sobre agregados materializados.
+- **Power BI Desktop, DAX, PBIR y TMDL:** modelo semántico y reporte ejecutivo reproducible sobre agregados seguros.
 - **openpyxl y pandas:** integración con maestros y consumo tabular de resultados agregados.
 - **GitHub Pages y Actions:** publicación pública, HTTPS y validación continua del contrato de entrega.
 
@@ -358,7 +422,7 @@ La base DuckDB contiene el detalle necesario para análisis interno, incluido `c
 
 ## Matriz de controles verificados
 
-Verificación ejecutada sobre los archivos fuente disponibles el **6 de noviembre de 2026**. Los valores esperados viven en el esquema `audit`; no intervienen en las fórmulas.
+Verificación ejecutada sobre los archivos fuente disponibles el **7 de noviembre de 2026**. Los valores esperados viven en el esquema `audit`; no intervienen en las fórmulas.
 
 | Control | Resultado observado | Estado |
 |---|---:|:---:|
@@ -375,8 +439,12 @@ Verificación ejecutada sobre los archivos fuente disponibles el **6 de noviembr
 | Controles SQL de datos | 20 de 20 | PASS |
 | Controles SQL de KPIs | 17 de 17 | PASS |
 | Controles SQL de cashback | 11 de 11 | PASS |
-| Pruebas Python | 36 de 36 | PASS |
+| Pruebas Python | 38 de 38 | PASS |
 | Dashboard y manifiesto públicos | HTTP 200 / HTTP 200 | PASS |
+| Power BI · páginas / visuales | 3 / 49 | PASS |
+| Power BI · tablas / medidas DAX | 15 / 39 | PASS |
+| PBIP portable sin rutas locales ni IDs | 0 hallazgos | PASS |
+| PBIX y PDF publicados | descarga disponible | PASS |
 
 ## Riesgos, limitaciones y recomendaciones
 
@@ -390,7 +458,9 @@ Verificación ejecutada sobre los archivos fuente disponibles el **6 de noviembr
 
 ## Política del repositorio
 
-`.gitignore` excluye el CSV transaccional, bases DuckDB, archivos temporales, entornos, secretos, credenciales y claves. Se mantienen versionables el SQL, Python, pruebas, `requirements.txt`, documentación, maestros suministrados y activos de marca. Ninguna exportación pública debe contener `card_id`.
+`.gitignore` excluye el CSV transaccional, bases DuckDB, archivos temporales, entornos, secretos, credenciales, claves, cachés de Power BI y artefactos locales de autoría. Se versionan únicamente SQL, Python, pruebas, documentación, maestros suministrados, activos de marca, agregados públicos y el paquete Power BI previamente auditado.
+
+El paquete público incluye el PBIX compilado, el PDF de revisión, el generador, el validador y el proyecto PBIP portable. Se excluyen `cache.abf`, `.pbi/`, configuraciones locales, copias de trabajo y cualquier exportación que contenga `card_id`.
 
 ## AI Log
 
@@ -403,6 +473,9 @@ La evidencia aceptada no depende de una respuesta de IA: cada cifra se recalcula
 - **Dashboard público:** https://cesarxbox32.github.io/masterplop-analytics-engineering/
 - **Análisis transaccional:** https://cesarxbox32.github.io/masterplop-analytics-engineering/#transactions
 - **Campaña mayo 2024:** https://cesarxbox32.github.io/masterplop-analytics-engineering/#campaign
+- **Descargar Power BI:** [Masterplop_Executive.pbix](powerbi/Masterplop_Executive.pbix)
+- **Ver reporte Power BI en PDF:** [Masterplop_Executive.pdf](powerbi/Masterplop_Executive.pdf)
+- **Proyecto PBIP auditable:** [powerbi/source/Masterplop_Executive.pbip](powerbi/source/Masterplop_Executive.pbip)
 - **Código fuente:** https://github.com/cesarxbox32/masterplop-analytics-engineering
 
-La publicación ejecutiva en GitHub Pages consume exactamente los agregados seguros generados por el pipeline. Su interfaz es responsive, permite navegar con teclado, respeta la preferencia de movimiento reducido y ofrece una tabla accesible detrás de cada gráfico. Streamlit permanece como la aplicación analítica principal para ejecución local o despliegue en un servicio compatible con Python.
+GitHub Pages ofrece la experiencia pública interactiva; GitHub muestra las vistas previas y permite revisar el PDF o descargar el PBIX. La interacción nativa del reporte Power BI requiere Power BI Desktop, mientras que el PBIP portable permite auditar visuales, consultas y medidas como código. Streamlit permanece como la aplicación analítica principal para ejecución local o despliegue en un servicio compatible con Python.

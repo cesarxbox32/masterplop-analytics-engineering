@@ -1,0 +1,35 @@
+table cashback_diagnostic
+	lineageTag: c3128485-d048-4052-b840-90efbf32d03d
+
+	column diagnostic_status
+		dataType: string
+		lineageTag: 3257b021-33fb-405c-ad09-2b12845797a8
+		summarizeBy: none
+		sourceColumn: diagnostic_status
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 79ef0c32-ee85-4865-9f00-97a283a5ed3e
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	column net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 66964222-ffe9-4ec6-9321-3583748f325d
+		summarizeBy: sum
+		sourceColumn: net_spend_usd
+
+	partition cashback_diagnostic = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/ZGlhZ25vc3RpY19zdGF0dXMsdHJhbnNhY3Rpb25fY291bnQsbmV0X3NwZW5kX3VzZA0KQ29pbmNpZGU6IGVsZWdpYmxlIHBvciBhbWJvcywxNDM5NCwzNjAwMDI2LjYwDQpJbmNsdWlkYSBlcnLDs25lYW1lbnRlIHBvciBpc194YiwxMjYxLDMyODkzMS43MA0KTm8gZWxlZ2libGUgcG9yIGFtYm9zLDEyODYsMzI5OTQzLjQwDQpPbWl0aWRhIHBvciBpc194YiwxNDUyMSwzNzE5MzUzLjEwDQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"diagnostic_status", type text}, {"transaction_count", Int64.Type}, {"net_spend_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

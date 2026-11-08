@@ -1,0 +1,215 @@
+table executive
+	lineageTag: 429108cb-0c5c-4898-a294-5352225335f7
+
+	measure 'Tarjetas activas' = MAX(executive[active_cards])
+		formatString: #,0
+		lineageTag: 89caa5e7-f8cd-4df4-ad2f-67747bb97f67
+
+	measure 'Transacciones' = MAX(executive[transaction_count])
+		formatString: #,0
+		lineageTag: 274b28c3-9f16-48c1-8702-9f0de6532a8e
+
+	measure 'Gasto neto USD' = MAX(executive[total_net_spend_usd])
+		formatString: $ #,0.00
+		lineageTag: 54a827d0-a85a-4091-9796-38df4c005f13
+
+	measure 'Ticket promedio USD' = MAX(executive[avg_transaction_amount_usd])
+		formatString: $ #,0.00
+		lineageTag: f326f092-c06b-4cd7-9d68-0ba9e3c04878
+
+	measure 'Cashback oficial USD' = MAX(cashback[total_cashback_usd])
+		formatString: $ #,0.00
+		lineageTag: 2a159ba4-11e8-477c-bc6b-142f58cb512c
+
+	measure 'Tarjetas beneficiadas' = MAX(cashback[beneficiary_card_count])
+		formatString: #,0
+		lineageTag: 5e1ba7f3-355d-4db9-ba37-a29d733371ca
+
+	measure 'Tarjetas topadas' = MAX(cashback[capped_card_count])
+		formatString: #,0
+		lineageTag: ce25e6cc-061c-4265-a78b-316bf5c0c48f
+
+	measure 'Gasto elegible USD' = MAX(cashback[net_eligible_spend_usd])
+		formatString: $ #,0.00
+		lineageTag: 17c7158f-2b1e-4d44-b17e-d55424f2a9eb
+
+	measure 'Transacciones elegibles' = MAX(cashback[eligible_transaction_count])
+		formatString: #,0
+		lineageTag: 6b931863-a947-450b-934a-3b017b820f02
+
+	measure 'Ahorro por tope USD' = MAX(cashback[cap_savings_usd])
+		formatString: $ #,0.00
+		lineageTag: 4fcd6df7-558e-4f4e-bbe8-a1b7d859e48e
+
+	measure 'Porcentaje topadas' = DIVIDE([Tarjetas topadas], [Tarjetas beneficiadas])
+		formatString: 0.00%
+		lineageTag: c17f463d-99fe-4a9c-9570-cec5b465fce4
+
+	measure 'Costo sin devoluciones USD' = MAX(cashback_sensitivity[positive_only_cashback_usd])
+		formatString: $ #,0.00
+		lineageTag: e2d5592c-26c1-449e-a958-3729bd109e8d
+
+	measure 'Costo is_xb incorrecto USD' = MAX(cashback_is_xb[incorrect_is_xb_cashback_usd])
+		formatString: $ #,0.00
+		lineageTag: ab4784bd-d8b0-4224-be2d-c04dd6548dd6
+
+	measure 'Brecha is_xb USD' = [Costo is_xb incorrecto USD] - [Cashback oficial USD]
+		formatString: $ #,0.00
+		lineageTag: f4877aec-88ed-419a-a66f-e8a5f6a76f71
+
+	measure 'Ticket regional USD' = DIVIDE(SUM(regional_ticket[net_spend_usd]), SUM(regional_ticket[transaction_count]))
+		formatString: $ #,0.00
+		lineageTag: 357b2c7f-615c-463a-a34c-6e3beb8d9369
+
+	measure 'Tarjetas activas periodo' = SUM(volume[active_cards])
+		formatString: #,0
+		lineageTag: ff7eb376-fa7c-4025-83b5-6c3428879163
+
+	measure 'Ticket trimestral credito USD' = MAX(quarterly_ticket[net_spend_per_active_card_usd])
+		formatString: $ #,0.00
+		lineageTag: aaac82c4-82ee-498f-9055-5695a6730f79
+
+	measure 'Monto escenario USD' = SUM(campaign_scenarios[amount_usd])
+		formatString: $ #,0.00
+		lineageTag: 5428682c-1664-4ee1-9c62-b3fdd6f335f9
+
+	measure 'Monto puente USD' = SUM(campaign_bridge[amount_usd])
+		formatString: $ #,0.00
+		lineageTag: 543b457c-549a-42e2-83bc-85f7dacffa1d
+
+	measure 'Transacciones diagnostico' = SUM(cashback_diagnostic[transaction_count])
+		formatString: #,0
+		lineageTag: 2b2218d8-8b11-4657-9c0d-55205b78d757
+
+	measure 'Participacion MCG' = DIVIDE(SUM(top_mcg[net_spend_usd]), MAX(top_mcg[global_net_spend_usd]))
+		formatString: 0.00%
+		lineageTag: c2b4ae9b-54f6-45ba-a3d4-b7fca1202bac
+
+	measure 'Participacion MCG Top5' = DIVIDE(SUM(top_mcg_5[net_spend_usd]), MAX(top_mcg_5[global_net_spend_usd]))
+		formatString: 0.00%
+		lineageTag: 1c999b5a-83bf-48db-8cde-7ac2f2517207
+
+	measure 'Adopcion contactless' = DIVIDE(SUM(contactless[contactless_net_spend_usd]), SUM(contactless[total_net_spend_usd]))
+		formatString: 0.00%
+		lineageTag: b4dc2078-f2c5-44a1-8de6-17fc09218d59
+
+	measure 'Adopcion contactless Top5' = DIVIDE(SUM(contactless_5[contactless_net_spend_usd]), SUM(contactless_5[total_net_spend_usd]))
+		formatString: 0.00%
+		lineageTag: 9f85c876-2ff9-45c1-a9c6-12d5b765ee0a
+
+	measure 'Crecimiento tarjetas credito' = VAR T1 = CALCULATE(MAX(volume[active_cards]), volume[period_quarter] = 1, volume[product_type] = "Crédito") VAR T2 = CALCULATE(MAX(volume[active_cards]), volume[period_quarter] = 2, volume[product_type] = "Crédito") RETURN DIVIDE(T2, T1) - 1
+		formatString: 0.00%
+		lineageTag: c09b23c7-9b8b-44a2-92f2-628712db96ad
+
+	measure 'Crecimiento ticket credito' = VAR T1 = CALCULATE(MAX(quarterly_ticket[net_spend_per_active_card_usd]), quarterly_ticket[period_quarter] = 1) VAR T2 = CALCULATE(MAX(quarterly_ticket[net_spend_per_active_card_usd]), quarterly_ticket[period_quarter] = 2) RETURN DIVIDE(T2, T1) - 1
+		formatString: 0.00%
+		lineageTag: 6b4f6ce1-f638-4443-8023-d7315480a4b6
+
+	measure 'Concentracion Top 3' = DIVIDE(SUMX(TOPN(3, ALL(top_mcg), top_mcg[net_spend_usd], DESC), top_mcg[net_spend_share_pct]), 100)
+		formatString: 0.00%
+		lineageTag: 2dda79dd-4492-476d-bd79-704db4019736
+
+	measure 'Lider contactless' = VAR Lider = TOPN(1, ALL(contactless), contactless[contactless_net_spend_pct], DESC) RETURN MAXX(Lider, contactless[issuer_country]) & " · " & FORMAT(DIVIDE(MAXX(Lider, contactless[contactless_net_spend_pct]), 100), "0.0%")
+		lineageTag: 30dbd436-b4c8-48d1-9da3-317fd8f86dea
+
+	measure 'Estado calidad' = IF(MAX(quality[failed_data_quality_checks]) + MAX(quality[failed_kpi_checks]) + MAX(quality[failed_cashback_checks]) = 0, "Conciliado", "Revisar")
+		lineageTag: 247a8d48-e0fb-4583-926c-e07b8f420db4
+
+	measure 'Titulo resumen' = "Resumen Ejecutivo"
+		lineageTag: b22dc718-6faa-42a7-9f7a-898b7b7e9387
+
+	measure 'Titulo transaccional' = "Análisis Transaccional"
+		lineageTag: 042cd5e1-4ab1-4c02-9676-e158d6f787bf
+
+	measure 'Titulo campana' = "Campaña Mayo 2024"
+		lineageTag: d02a5f91-b173-4921-939e-7c7f6b6e1521
+
+	measure 'Subtitulo general' = "Datos agregados · Sin IDs"
+		lineageTag: 287ea184-08e5-434a-aa42-26678aead555
+
+	measure 'Regla mercado regional' = "Mercado = país emisor (ctry_card)"
+		lineageTag: 5bdc40e6-aa21-48fe-98fc-572ded6d9c2e
+
+	measure 'Regla elegibilidad' = "Mayo · Crédito · emisor Chile"
+		lineageTag: a2dc95ef-e57a-45ed-ad4b-9cc8079b9dec
+
+	measure 'Regla geografia' = "Fuera de Chile · campo ctry_mrch"
+		lineageTag: deca0395-acc5-42b2-9dec-ad7aaf253712
+
+	measure 'Regla beneficio' = "7% neto positivo · tope USD 50"
+		lineageTag: b879611b-710d-4af5-8996-058dae5e10c3
+
+	measure 'Regla redondeo' = "Por tarjeta · antes de sumar"
+		lineageTag: b454e64f-6b2f-4540-a7c4-61618212b1fc
+
+	measure 'Fondo cabecera' = ""
+		lineageTag: 5adcd14b-fd56-476c-bed8-33ee02b35506
+
+	column active_cards
+		dataType: int64
+		formatString: #,0
+		lineageTag: b602b7e8-32a8-4318-9c7b-34fc87538ab9
+		summarizeBy: sum
+		sourceColumn: active_cards
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 77a11c7b-bd34-4632-845f-a24b2ea632b0
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	column total_net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: eff9dd2e-cf54-45bd-8433-541080430126
+		summarizeBy: sum
+		sourceColumn: total_net_spend_usd
+
+	column avg_transaction_amount_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: a0b4ef64-c04e-4382-9fbd-b0f606c4bb82
+		summarizeBy: sum
+		sourceColumn: avg_transaction_amount_usd
+
+	column total_cashback_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 353533e9-62d8-465d-ae1c-20460eeef1a6
+		summarizeBy: sum
+		sourceColumn: total_cashback_usd
+
+	column beneficiary_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: d3d37e0f-57a7-44a3-b679-9252f0187b4f
+		summarizeBy: sum
+		sourceColumn: beneficiary_card_count
+
+	column min_transaction_date
+		dataType: dateTime
+		formatString: dd-MM-yyyy
+		lineageTag: c04008cd-8612-4bca-a498-095635c665f9
+		summarizeBy: none
+		sourceColumn: min_transaction_date
+
+	column max_transaction_date
+		dataType: dateTime
+		formatString: dd-MM-yyyy
+		lineageTag: eba9c24e-50ee-4b72-be13-43dad136e159
+		summarizeBy: none
+		sourceColumn: max_transaction_date
+
+	partition executive = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/YWN0aXZlX2NhcmRzLHRyYW5zYWN0aW9uX2NvdW50LHRvdGFsX25ldF9zcGVuZF91c2QsYXZnX3RyYW5zYWN0aW9uX2Ftb3VudF91c2QsdG90YWxfY2FzaGJhY2tfdXNkLGJlbmVmaWNpYXJ5X2NhcmRfY291bnQsbWluX3RyYW5zYWN0aW9uX2RhdGUsbWF4X3RyYW5zYWN0aW9uX2RhdGUNCjU5OTk3LDI0MDAwMDAsNDMwMTI0NzA5LjQwLDE3OS4yMiwxNzg0NzEuNjIsNDAyOSwyMDI0LTAxLTAxLDIwMjQtMDYtMzANCg==",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"active_cards", Int64.Type}, {"transaction_count", Int64.Type}, {"total_net_spend_usd", Currency.Type}, {"avg_transaction_amount_usd", Currency.Type}, {"total_cashback_usd", Currency.Type}, {"beneficiary_card_count", Int64.Type}, {"min_transaction_date", type date}, {"max_transaction_date", type date}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

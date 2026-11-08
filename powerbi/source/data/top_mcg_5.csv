@@ -1,0 +1,6 @@
+spend_rank,mcg_code,mcg_code_original,mcg_name,net_spend_usd,net_spend_share_pct,transaction_count,global_net_spend_usd
+1,1,1,Groceries and Supermarkets,95335277.70,22.1646,529170,430124709.40
+2,2,2,Restaurants and Dining,73646800.30,17.1222,411401,430124709.40
+3,3,3,Entertainment,57648996.90,13.4029,321787,430124709.40
+4,4,4,Travel and Transportation,44456008.00,10.3356,249349,430124709.40
+5,5,5,Clothing and Accessories,34895828.60,8.1130,195217,430124709.40

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.149.json",
+  "name": "Masterplop Executive",
+  "dataColors": [
+    "#1A56DB",
+    "#7C3AED",
+    "#FBBF24",
+    "#16A34A",
+    "#C24141"
+  ],
+  "background": "#F5F7FB",
+  "foreground": "#172033",
+  "tableAccent": "#1A56DB",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#172033"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#667085"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#172033"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "*": [
+          {
+            "displayUnits": 1,
+            "labelDisplayUnits": 1,
+            "titleDisplayUnits": 1,
+            "detailDisplayUnits": 1,
+            "valueDisplayUnits": 1,
+            "secLabelDisplayUnits": 1,
+            "titleLabelDisplayUnits": 1
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "*": [
+          {
+            "$id": "default",
+            "displayUnits": 1,
+            "labelDisplayUnits": 1,
+            "titleDisplayUnits": 1,
+            "detailDisplayUnits": 1,
+            "valueDisplayUnits": 1,
+            "secLabelDisplayUnits": 1,
+            "titleLabelDisplayUnits": 1
+          }
+        ]
+      }
+    }
+  }
+}

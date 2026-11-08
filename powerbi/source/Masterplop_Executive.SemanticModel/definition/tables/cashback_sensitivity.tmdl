@@ -1,0 +1,57 @@
+table cashback_sensitivity
+	lineageTag: e18a2087-a5f0-4d5c-85f7-1d63bce03304
+
+	column eligible_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: e105a816-d7bc-4e63-b36c-3eb6fd7cc8e9
+		summarizeBy: sum
+		sourceColumn: eligible_card_count
+
+	column beneficiary_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 94d4cb28-971b-4106-9c71-d1a89baecb15
+		summarizeBy: sum
+		sourceColumn: beneficiary_card_count
+
+	column positive_eligible_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 251c9f77-ba38-497e-8f21-d0ce344568fa
+		summarizeBy: sum
+		sourceColumn: positive_eligible_transaction_count
+
+	column positive_eligible_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: da2b48a5-e7ff-4215-81ff-04370da7ae82
+		summarizeBy: sum
+		sourceColumn: positive_eligible_spend_usd
+
+	column positive_only_cashback_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 319aef55-773e-4652-aafb-2fafb57fcbef
+		summarizeBy: sum
+		sourceColumn: positive_only_cashback_usd
+
+	column incremental_cost_vs_net_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 631fb773-7cbf-4a60-bce7-1056d726ca2d
+		summarizeBy: sum
+		sourceColumn: incremental_cost_vs_net_usd
+
+	partition cashback_sensitivity = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/ZWxpZ2libGVfY2FyZF9jb3VudCxiZW5lZmljaWFyeV9jYXJkX2NvdW50LHBvc2l0aXZlX2VsaWdpYmxlX3RyYW5zYWN0aW9uX2NvdW50LHBvc2l0aXZlX2VsaWdpYmxlX3NwZW5kX3VzZCxwb3NpdGl2ZV9vbmx5X2Nhc2hiYWNrX3VzZCxpbmNyZW1lbnRhbF9jb3N0X3ZzX25ldF91c2QNCjQwMjksNDAyOSwyODg4NSw3MzI3MjMxLjkwLDE3ODYwOC44OCwxMzcuMjYNCg==",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"eligible_card_count", Int64.Type}, {"beneficiary_card_count", Int64.Type}, {"positive_eligible_transaction_count", Int64.Type}, {"positive_eligible_spend_usd", Currency.Type}, {"positive_only_cashback_usd", Currency.Type}, {"incremental_cost_vs_net_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

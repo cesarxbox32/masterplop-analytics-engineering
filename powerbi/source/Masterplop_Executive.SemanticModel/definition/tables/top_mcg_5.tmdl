@@ -1,0 +1,69 @@
+table top_mcg_5
+	lineageTag: 81bae3b5-8a6d-48eb-8559-cb4c6f869a8b
+
+	column spend_rank
+		dataType: int64
+		formatString: #,0
+		lineageTag: 990097a8-a3b8-4c61-b6c2-fc5002cff555
+		summarizeBy: sum
+		sourceColumn: spend_rank
+
+	column mcg_code
+		dataType: int64
+		formatString: #,0
+		lineageTag: bda27b59-140e-40ee-b3dd-1fc189e29e82
+		summarizeBy: sum
+		sourceColumn: mcg_code
+
+	column mcg_code_original
+		dataType: string
+		lineageTag: 83743333-bef1-4657-a48b-178bdc30fd9a
+		summarizeBy: none
+		sourceColumn: mcg_code_original
+
+	column mcg_name
+		dataType: string
+		lineageTag: 93c0164e-40f7-4fd7-a9b4-dfeb31149475
+		summarizeBy: none
+		sourceColumn: mcg_name
+
+	column net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: d45a486a-6e55-4138-a548-101b71ead1dd
+		summarizeBy: sum
+		sourceColumn: net_spend_usd
+
+	column net_spend_share_pct
+		dataType: decimal
+		formatString: 0.00
+		lineageTag: 61be6ba5-65f1-4fb5-9f8b-95f5d09aafcb
+		summarizeBy: sum
+		sourceColumn: net_spend_share_pct
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 8130aeb3-10d6-4ab4-84e9-1291a74b6a0b
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	column global_net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: bfbdd5aa-0a91-4a52-94eb-9589c312a9e9
+		summarizeBy: sum
+		sourceColumn: global_net_spend_usd
+
+	partition top_mcg_5 = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "c3BlbmRfcmFuayxtY2dfY29kZSxtY2dfY29kZV9vcmlnaW5hbCxtY2dfbmFtZSxuZXRfc3BlbmRfdXNkLG5ldF9zcGVuZF9zaGFyZV9wY3QsdHJhbnNhY3Rpb25fY291bnQsZ2xvYmFsX25ldF9zcGVuZF91c2QNCjEsMSwxLEdyb2NlcmllcyBhbmQgU3VwZXJtYXJrZXRzLDk1MzM1Mjc3LjcwLDIyLjE2NDYsNTI5MTcwLDQzMDEyNDcwOS40MA0KMiwyLDIsUmVzdGF1cmFudHMgYW5kIERpbmluZyw3MzY0NjgwMC4zMCwxNy4xMjIyLDQxMTQwMSw0MzAxMjQ3MDkuNDANCjMsMywzLEVudGVydGFpbm1lbnQsNTc2NDg5OTYuOTAsMTMuNDAyOSwzMjE3ODcsNDMwMTI0NzA5LjQwDQo0LDQsNCxUcmF2ZWwgYW5kIFRyYW5zcG9ydGF0aW9uLDQ0NDU2MDA4LjAwLDEwLjMzNTYsMjQ5MzQ5LDQzMDEyNDcwOS40MA0KNSw1LDUsQ2xvdGhpbmcgYW5kIEFjY2Vzc29yaWVzLDM0ODk1ODI4LjYwLDguMTEzMCwxOTUyMTcsNDMwMTI0NzA5LjQwDQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"spend_rank", Int64.Type}, {"mcg_code", Int64.Type}, {"mcg_code_original", type text}, {"mcg_name", type text}, {"net_spend_usd", Currency.Type}, {"net_spend_share_pct", Currency.Type}, {"transaction_count", Int64.Type}, {"global_net_spend_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

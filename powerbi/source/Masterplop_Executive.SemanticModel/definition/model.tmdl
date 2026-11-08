@@ -1,0 +1,27 @@
+model Model
+	culture: es-CL
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-CL
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = [ "executive", "volume", "quarterly_ticket", "regional_ticket", "top_mcg", "top_mcg_5", "contactless", "contactless_5", "cashback", "cashback_sensitivity", "cashback_is_xb", "cashback_diagnostic", "quality", "campaign_scenarios", "campaign_bridge" ]
+annotation __PBI_TimeIntelligenceEnabled = 0
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table executive
+ref table volume
+ref table quarterly_ticket
+ref table regional_ticket
+ref table top_mcg
+ref table top_mcg_5
+ref table contactless
+ref table contactless_5
+ref table cashback
+ref table cashback_sensitivity
+ref table cashback_is_xb
+ref table cashback_diagnostic
+ref table quality
+ref table campaign_scenarios
+ref table campaign_bridge

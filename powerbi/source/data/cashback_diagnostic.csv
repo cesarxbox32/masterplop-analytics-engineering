@@ -1,0 +1,5 @@
+﻿diagnostic_status,transaction_count,net_spend_usd
+Coincide: elegible por ambos,14394,3600026.60
+Incluida erróneamente por is_xb,1261,328931.70
+No elegible por ambos,1286,329943.40
+Omitida por is_xb,14521,3719353.10

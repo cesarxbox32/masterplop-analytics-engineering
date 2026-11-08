@@ -1,0 +1,50 @@
+table cashback_is_xb
+	lineageTag: e82cf363-60b4-436c-982a-93ae3a95cf94
+
+	column is_xb_eligible_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 422ad1b4-b84a-4f57-a54e-c29156f7f44e
+		summarizeBy: sum
+		sourceColumn: is_xb_eligible_transaction_count
+
+	column beneficiary_card_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: aa808d87-eed8-4ac6-9319-11b2206f79fc
+		summarizeBy: sum
+		sourceColumn: beneficiary_card_count
+
+	column net_eligible_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 6164208e-98df-4391-a22c-f536e375072a
+		summarizeBy: sum
+		sourceColumn: net_eligible_spend_usd
+
+	column incorrect_is_xb_cashback_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 910eecdc-7732-40b6-b437-f7414d67fba1
+		summarizeBy: sum
+		sourceColumn: incorrect_is_xb_cashback_usd
+
+	column difference_vs_official_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: add69596-71c4-4aa2-aea7-b2b62100b74e
+		summarizeBy: sum
+		sourceColumn: difference_vs_official_usd
+
+	partition cashback_is_xb = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/aXNfeGJfZWxpZ2libGVfdHJhbnNhY3Rpb25fY291bnQsYmVuZWZpY2lhcnlfY2FyZF9jb3VudCxuZXRfZWxpZ2libGVfc3BlbmRfdXNkLGluY29ycmVjdF9pc194Yl9jYXNoYmFja191c2QsZGlmZmVyZW5jZV92c19vZmZpY2lhbF91c2QNCjE1NjU1LDM5NTUsMzkyODk1OC4zMCwxMzUxNjAuODgsLTQzMzEwLjc0DQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"is_xb_eligible_transaction_count", Int64.Type}, {"beneficiary_card_count", Int64.Type}, {"net_eligible_spend_usd", Currency.Type}, {"incorrect_is_xb_cashback_usd", Currency.Type}, {"difference_vs_official_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

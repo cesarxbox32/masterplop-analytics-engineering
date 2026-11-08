@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Masterplop_Executive"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "495d8cd7-8dbe-430e-a115-bf006bac7e46"
+  }
+}

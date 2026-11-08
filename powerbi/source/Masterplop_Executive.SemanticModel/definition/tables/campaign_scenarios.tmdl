@@ -1,0 +1,36 @@
+table campaign_scenarios
+	lineageTag: 8e464731-a332-4128-8268-8e2d7ef83406
+
+	column scenario_order
+		dataType: int64
+		formatString: #,0
+		lineageTag: ce4a1699-0894-4df4-880d-0f7c4cf2e1a1
+		summarizeBy: sum
+		sourceColumn: scenario_order
+
+	column scenario
+		dataType: string
+		sortByColumn: scenario_order
+		lineageTag: 39aef0c2-fe07-45ff-810c-4c4326aa3751
+		summarizeBy: none
+		sourceColumn: scenario
+
+	column amount_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: d2bdae16-74f1-4313-91bd-d3618f6eded9
+		summarizeBy: sum
+		sourceColumn: amount_usd
+
+	partition campaign_scenarios = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "c2NlbmFyaW9fb3JkZXIsc2NlbmFyaW8sYW1vdW50X3VzZA0KMSxPZmljaWFsIG5ldG8sMTc4NDcxLjYyDQoyLFNpbiBkZXNjb250YXIgZGV2b2x1Y2lvbmVzLDE3ODYwOC44OA0KMyxpc194YiBpbmNvcnJlY3RvLDEzNTE2MC44OA0K",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"scenario_order", Int64.Type}, {"scenario", type text}, {"amount_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

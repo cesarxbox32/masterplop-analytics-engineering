@@ -10,11 +10,23 @@ __pycache__/
 db_transac.csv
 data/raw/
 
-# Artefactos Power BI fuera del alcance del entregable
-powerbi/
-data/processed/powerbi/
+# Power BI: paquete público curado; artefactos locales y cachés excluidos
 *.pbix
 *.pbit
+powerbi/*
+!powerbi/Masterplop_Executive.pbix
+!powerbi/Masterplop_Executive.pdf
+!powerbi/README_POWERBI.md
+!powerbi/VALIDACION_POWERBI.md
+!powerbi/validate_powerbi.ps1
+!powerbi/generate_masterplop_powerbi.js
+!powerbi/source/
+!powerbi/source/**
+powerbi/**/.pbi/
+powerbi/**/*.abf
+powerbi/**/localSettings.json
+powerbi/**/editorSettings.json
+data/processed/powerbi/
 
 # Bases locales y archivos temporales de DuckDB
 **/*.duckdb

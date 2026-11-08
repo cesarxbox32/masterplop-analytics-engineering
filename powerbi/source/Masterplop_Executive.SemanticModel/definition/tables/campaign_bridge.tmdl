@@ -1,0 +1,36 @@
+table campaign_bridge
+	lineageTag: d0d42102-834e-4abd-a561-34a9eadc71c0
+
+	column step_order
+		dataType: int64
+		formatString: #,0
+		lineageTag: 02afe1e8-f821-4752-abef-b574547201ed
+		summarizeBy: sum
+		sourceColumn: step_order
+
+	column step
+		dataType: string
+		sortByColumn: step_order
+		lineageTag: 97e6530b-c046-4d69-9fd9-3de0d51ba9d8
+		summarizeBy: none
+		sourceColumn: step
+
+	column amount_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: ec52e356-d55c-43fc-a251-6b03bedd15c8
+		summarizeBy: sum
+		sourceColumn: amount_usd
+
+	partition campaign_bridge = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "c3RlcF9vcmRlcixzdGVwLGFtb3VudF91c2QNCjEsQ2FzaGJhY2sgc2luIHRvcGUsNTEyMzU4LjYzDQoyLEFob3JybyBwb3IgdG9wZSwtMzMzODg3LjAxDQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"step_order", Int64.Type}, {"step", type text}, {"amount_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

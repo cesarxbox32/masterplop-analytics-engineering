@@ -1,0 +1,56 @@
+table contactless_5
+	lineageTag: cdf4792c-dde1-49a6-8143-19aacf80c12e
+
+	column issuer_country
+		dataType: string
+		lineageTag: f98dc9e4-73ac-4089-a9b8-1664ff891ad6
+		summarizeBy: none
+		sourceColumn: issuer_country
+
+	column contactless_net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 0c614604-d598-4852-9936-75238d541413
+		summarizeBy: sum
+		sourceColumn: contactless_net_spend_usd
+
+	column total_net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: fc226e1a-12a8-499d-8528-72725f5ba39a
+		summarizeBy: sum
+		sourceColumn: total_net_spend_usd
+
+	column contactless_net_spend_pct
+		dataType: decimal
+		formatString: 0.00
+		lineageTag: 96db678d-5bfb-4b13-bd17-dce1667464fd
+		summarizeBy: sum
+		sourceColumn: contactless_net_spend_pct
+
+	column contactless_transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: c244794e-49df-42e1-9404-5c9b03fd9368
+		summarizeBy: sum
+		sourceColumn: contactless_transaction_count
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: ed8f21ef-b19e-444e-b4be-840d2a3beb81
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	partition contactless_5 = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "aXNzdWVyX2NvdW50cnksY29udGFjdGxlc3NfbmV0X3NwZW5kX3VzZCx0b3RhbF9uZXRfc3BlbmRfdXNkLGNvbnRhY3RsZXNzX25ldF9zcGVuZF9wY3QsY29udGFjdGxlc3NfdHJhbnNhY3Rpb25fY291bnQsdHJhbnNhY3Rpb25fY291bnQNCk3DqXhpY28sNzE0OTA5ODAuMTAsMTAxNzM3ODM5LjMwLDcwLjI2OTgsMzM0MjgzLDQ3NjM5OA0KQ29sb21iaWEsMzU0OTY1NzAuNjAsNTA1Mzk5MzIuMDAsNzAuMjM0NywxNjY5MTUsMjM4MjExDQpCcmFzaWwsNzI5MTM0NzEuODAsMTAzOTYzOTE2LjcwLDcwLjEzMzQsMzMzNTQ5LDQ3NjUxNg0KQXJnZW50aW5hLDU0MjA0NzIyLjYwLDc3MzgwNjYxLjcwLDcwLjA0OTQsMjUwODA1LDM1ODYwOQ0KQ2hpbGUsMjg2NzUwNjIuNjAsNDA5NjY4MjEuOTAsNjkuOTk1OCwxMzU4ODcsMTk0MjU5DQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"issuer_country", type text}, {"contactless_net_spend_usd", Currency.Type}, {"total_net_spend_usd", Currency.Type}, {"contactless_net_spend_pct", Currency.Type}, {"contactless_transaction_count", Int64.Type}, {"transaction_count", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

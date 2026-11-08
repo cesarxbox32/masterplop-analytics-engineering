@@ -1,0 +1,48 @@
+table regional_ticket
+	lineageTag: 654930ef-f596-4588-9155-99e36641b4b0
+
+	column issuer_country
+		dataType: string
+		lineageTag: 89ef3f4b-4ca0-441f-98ee-e2482e772659
+		summarizeBy: none
+		sourceColumn: issuer_country
+
+	column product_name
+		dataType: string
+		lineageTag: 17b8a13b-cf58-4e87-b900-e5da55261529
+		summarizeBy: none
+		sourceColumn: product_name
+
+	column transaction_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: affef026-58b1-4de0-a2ad-27c537c78db2
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+	column net_spend_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: 2f7c58c1-a4b6-41c2-a2b4-beabb3290ecb
+		summarizeBy: sum
+		sourceColumn: net_spend_usd
+
+	column avg_transaction_amount_usd
+		dataType: decimal
+		formatString: $ #,0.00
+		lineageTag: c51855c3-cc4a-4c3d-9e31-251ba0dd6c14
+		summarizeBy: sum
+		sourceColumn: avg_transaction_amount_usd
+
+	partition regional_ticket = m
+		mode: import
+		source =
+				let
+				    EmbeddedCsv = "77u/aXNzdWVyX2NvdW50cnkscHJvZHVjdF9uYW1lLHRyYW5zYWN0aW9uX2NvdW50LG5ldF9zcGVuZF91c2QsYXZnX3RyYW5zYWN0aW9uX2Ftb3VudF91c2QNCkFyZ2VudGluYSxQMSwxMDc1ODcsODQzMDg2MS42MCw3OC4zNg0KQXJnZW50aW5hLFAyLDkxMjg5LDEyNTEwMjAzLjgwLDEzNy4wNA0KQXJnZW50aW5hLFAzLDYwOTA2LDEzMDg2NDM0LjgwLDIxNC44Ng0KQXJnZW50aW5hLFA0LDMxNDU4LDIxNjY1ODMzLjcwLDY4OC43Mg0KQXJnZW50aW5hLFA1LDE1MDQxLDE3NzQwMDU0LjcwLDExNzkuNDUNCkJvbGl2aWEsUDEsMTEwOTUsMzQwNjI4LjIwLDMwLjcwDQpCb2xpdmlhLFAyLDk4MzIsNTI2MjM3LjYwLDUzLjUyDQpCb2xpdmlhLFAzLDU4NTEsNDgwNDkzLjAwLDgyLjEyDQpCb2xpdmlhLFA0LDI5MDcsNzcyOTY2LjEwLDI2NS45MA0KQm9saXZpYSxQNSwxOTU3LDg5ODQ5Mi43MCw0NTkuMTINCkJyYXNpbCxQMSwxNDI1NDUsMTExNTg4NTMuMDAsNzguMjgNCkJyYXNpbCxQMiwxMTY1NzgsMTYwMjE5NjIuMDAsMTM3LjQ0DQpCcmFzaWwsUDMsODQ5NjIsMTgyNTE2OTAuMDAsMjE0LjgyDQpCcmFzaWwsUDQsNDI2NjksMjkxNDAzMzEuMDAsNjgyLjk0DQpCcmFzaWwsUDUsMjAzMDEsMjM3NjM5MjcuMzAsMTE3MC41OA0KQ2hpbGUsUDEsNTc0NjIsNDQ3ODEzOC45MCw3Ny45Mw0KQ2hpbGUsUDIsNTExODMsNzAyNzQ4Ni40MCwxMzcuMzANCkNoaWxlLFAzLDMzNTY3LDcyMzkzNzUuODAsMjE1LjY3DQpDaGlsZSxQNCwxNTk5NSwxMDk3Mzg5Mi41MCw2ODYuMDgNCkNoaWxlLFA1LDc2NDcsODk2NTc1MC4wMCwxMTcyLjQ1DQpDb2xvbWJpYSxQMSw3MTU2MSw1NTkxOTc1LjgwLDc4LjE0DQpDb2xvbWJpYSxQMiw1OTAxNiw4MDc0MTIxLjAwLDEzNi44MQ0KQ29sb21iaWEsUDMsNDIzOTcsOTE0NjcyMy4zMCwyMTUuNzQNCkNvbG9tYmlhLFA0LDE4NjU1LDEyODM2NjgxLjgwLDY4OC4xMQ0KQ29sb21iaWEsUDUsMTAxNjMsMTIxNjY5MDcuMjAsMTE5Ny4xOA0KRWN1YWRvcixQMSwzODU5OSwxMTgzNTk1LjUwLDMwLjY2DQpFY3VhZG9yLFAyLDMwOTIwLDE2NTE4NDcuMDAsNTMuNDINCkVjdWFkb3IsUDMsMjE3NDQsMTgxMjkwNC44MCw4My4zNw0KRWN1YWRvcixQNCw5OTkyLDI2NDQwNTAuODAsMjY0LjYyDQpFY3VhZG9yLFA1LDUxOTAsMjMzNjYwNS4wMCw0NTAuMjENClBhcmFndWF5LFAxLDMyNDMsOTk2OTMuOTAsMzAuNzQNClBhcmFndWF5LFAyLDI4NDMsMTUxMTAxLjQwLDUzLjE1DQpQYXJhZ3VheSxQMywxOTkzLDE2Nzk5NS45MCw4NC4yOQ0KUGFyYWd1YXksUDQsODE5LDIyNTkxOC4zMCwyNzUuODUNClBhcmFndWF5LFA1LDcyMiwzMDkxOTIuMjAsNDI4LjI0DQpQZXLDuixQMSw0ODY1MCwxNDg1NTcwLjMwLDMwLjU0DQpQZXLDuixQMiw0MzEzNywyMzA3Mjg0LjMwLDUzLjQ5DQpQZXLDuixQMywyNzEzNywyMjY4MjQxLjUwLDgzLjU4DQpQZXLDuixQNCwxNTMzNyw0MDk0MDYwLjYwLDI2Ni45NA0KUGVyw7osUDUsNzM0MywzMzg0MTc1LjQwLDQ2MC44Nw0KVXJ1Z3VheSxQMSw3NDM0LDIyNzA2OS4zMCwzMC41NA0KVXJ1Z3VheSxQMiw2Mjk0LDMzMjEyNS45MCw1Mi43Nw0KVXJ1Z3VheSxQMyw0MTgxLDM0ODg4Ni41MCw4My40NQ0KVXJ1Z3VheSxQNCwyMjU4LDU5ODcwMC4xMCwyNjUuMTUNClVydWd1YXksUDUsMTEwMCw0OTc0MDAuMzAsNDUyLjE4DQo=",
+				    Source = Csv.Document(Binary.FromText(EmbeddedCsv, BinaryEncoding.Base64), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"issuer_country", type text}, {"product_name", type text}, {"transaction_count", Int64.Type}, {"net_spend_usd", Currency.Type}, {"avg_transaction_amount_usd", Currency.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
