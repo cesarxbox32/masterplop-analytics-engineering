@@ -65,6 +65,13 @@ def test_public_static_dashboard_is_versioned() -> None:
     assert 'role="tabpanel"' in page
     assert "prefers-reduced-motion" in page
     assert "ResizeObserver" in page
+    assert "IntersectionObserver" in page
+    assert 'class="scroll-progress"' in page
+    assert 'class="status-pill"' in page
+    assert 'class="panel loading-shell"' in page
+    assert "setupHeroSpotlight" in page
+    assert "@keyframes orbDrift" in page
+    assert "motion-ready" in page
     assert "data-details" in page
     assert "campaignWaterfall" in page
     assert "campaignMatrix" in page
